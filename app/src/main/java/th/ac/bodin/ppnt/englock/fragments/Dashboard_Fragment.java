@@ -89,7 +89,7 @@ public class Dashboard_Fragment extends Fragment {
         }
 
         temp = getResources().getString(R.string.statswheel);
-        desc.setText(temp + " " + String.valueOf(seen) + ")");
+        desc.setText(temp + " 0/" + String.valueOf(seen) + ")");
 
         if(seen == 0){
             seen = 1;
