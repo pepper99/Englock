@@ -182,7 +182,7 @@ public class LockscreenActivity extends Activity {
         //clickLock = (Button)findViewById(R.id.unlockbutton);
 
         txvw = (TextView)findViewById(R.id.question_txtview);
-        txvw.setText( "\"" + ques + "\"\n" + getResources().getString(R.string.question_vocab_thai_eng) );
+        txvw.setText( "\"" + ques + "\"\n" + getResources().getString(R.string.question_vocab) );
 
         //countdown
 
@@ -297,8 +297,8 @@ public class LockscreenActivity extends Activity {
                 cdt.cancel();
 
                 String AlertTxt;
-                if(isQuestionEng) AlertTxt = "That's correct!\n" + quesword + " : " + answord;
-                else AlertTxt = "That's correct!\n" + answord + " : " + quesword;
+                if(isQuestionEng) AlertTxt = getResources().getString(R.string.niceone) + "\n" + quesword + " : " + answord;
+                else AlertTxt = getResources().getString(R.string.niceone) + "\n" + answord + " : " + quesword;
                 ViewDialog alert = new ViewDialog.Builder()
                         .setMessage(AlertTxt)
                         .setButton(R.string.ok)
@@ -362,8 +362,8 @@ public class LockscreenActivity extends Activity {
 
     private void TimeoutAlert() {
         String AlertTxt;
-        if(isQuestionEng) AlertTxt = quesword + " : " + answord + "\nBetter luck next time!";
-        else AlertTxt = answord + " : " + quesword + "\nBetter luck next time!";
+        if(isQuestionEng) AlertTxt = quesword + " : " + answord + "\n";
+        else AlertTxt = answord + " : " + quesword + "\n" + getResources().getString(R.string.toobad);
         ViewDialog alert = new ViewDialog.Builder()
                 .setMessage(AlertTxt)
                 .setButton(R.string.ok)

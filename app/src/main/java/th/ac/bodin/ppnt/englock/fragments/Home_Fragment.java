@@ -196,7 +196,7 @@ public class Home_Fragment extends Fragment {
         String AcName = shared.getString("Ac_NAME", "Anonymous");
         mTextMessage = (TextView)getView().findViewById(R.id.welcomeText);
         signInButton.setVisibility(View.INVISIBLE);
-        mTextMessage.setText("Welcome,\n       " + AcName);
+        mTextMessage.setText(getResources().getString(R.string.welcome) + "\n       " + AcName);
         mTextMessage.setVisibility(View.VISIBLE);
 
         shared = getActivity().getSharedPreferences("Englock Shop Stats", Context.MODE_PRIVATE);

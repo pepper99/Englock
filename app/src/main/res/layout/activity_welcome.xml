@@ -32,8 +32,10 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:background="@null"
+        android:fontFamily="@font/thaisansneueregular"
         android:text="Next"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:textSize="22sp" />
 
     <Button
         android:id="@+id/btn_skip"
@@ -42,6 +44,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:background="@null"
+        android:fontFamily="@font/thaisansneueregular"
         android:text="Skip"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:textSize="22sp" />
 </RelativeLayout>

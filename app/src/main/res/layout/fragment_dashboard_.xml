@@ -26,13 +26,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="3dp"
-            android:layout_marginTop="5dp"
-            android:text="Correctness"
+            android:fontFamily="@font/thaisansneuelight"
+            android:text="@string/correctness"
             android:textColor="@android:color/darker_gray"
-            android:textSize="14sp" />
+            android:textSize="20sp" />
     </FrameLayout>
 
     <android.support.constraint.ConstraintLayout
@@ -55,12 +54,12 @@
             android:id="@+id/ArcView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintBottom_toBottomOf="@id/constraintLayout1"
             app:layout_constraintEnd_toEndOf="@id/constraintLayout1"
             app:layout_constraintStart_toStartOf="@id/constraintLayout1"
@@ -86,22 +85,22 @@
                 android:id="@+id/percentage1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:text="0.0%"
                 android:textColor="#66ff1a"
-                android:textSize="50sp" />
+                android:textSize="60sp" />
 
             <TextView
                 android:id="@+id/desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autoSizeTextType="uniform"
+                android:fontFamily="@font/thaisansneuelight"
                 android:gravity="center"
-                android:text="(First choice/Seen : 0/0)"
+                android:text="@string/statswheelunset"
                 android:textColor="#B6BFB6"
-                android:textSize="14sp" />
+                android:textSize="24sp" />
         </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
@@ -125,13 +124,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="3dp"
-            android:layout_marginTop="5dp"
-            android:text="Recently seen"
+            android:fontFamily="@font/thaisansneuelight"
+            android:text="@string/recent"
             android:textColor="@android:color/darker_gray"
-            android:textSize="14sp" />
+            android:textSize="20sp" />
     </FrameLayout>
 
     <android.support.constraint.ConstraintLayout
@@ -158,8 +156,9 @@
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/fc_lamoon"
-            android:text="x\n\nx\n\nx"
+            android:fontFamily="@font/thaisansneueregular"
+            android:lineSpacingExtra="8sp"
+            android:text="x\nx\nx"
             android:textSize="26sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

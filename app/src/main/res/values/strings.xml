@@ -19,13 +19,6 @@
 
     <string name="action_example">Example action</string>
 
-    <string name="action_settings">Settings</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="tab_text_3">Tab 3</string>
-    <string name="tab_text_4">Tab 4</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_shop">Shop</string>
@@ -33,16 +26,52 @@
     <string name="title_notifications">Notifications</string>
 
     //questtion_vocab_!question!_!answer!
-    <string name="question_vocab_thai_eng">มีความหมายใกล้เคียงกับคำใดมากที่สุด</string>
+    <string name="question_vocab">Which of the following has the closest meaning to this word?</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="toobad">Better luck next time!</string>
+    <string name="niceone">That\'s correct!</string>
+
+    //Home
+    <string name="welcome">Welcome,</string>
+
+    //Dashboard
+    <string name="correctness">Correctness</string>
+    <string name="recent">Recently seen</string>
+    <string name="statswheel">(First choice/Seen :</string>
+    <string name="statswheelunset">(First choice/Seen : 0/0)</string>
+
+    //Shop
+    <string name="product1">School</string>
+    <string name="product2">Clothes</string>
+    <string name="product3">Emotions</string>
+    <string name="product4">Etiquette</string>
+    <string name="product5">Landforms</string>
+    <string name="buyquestion1">Are you sure you want to buy</string>
+    <string name="buyquestion2">"for "</string>
+    <string name="buyquestion3">coins?</string>
+    <string name="bought">Bought</string>
+
+    //Settings
+    <string name="lockscreenquiz">Lock screen quiz</string>
+    <string name="delay">Quiz delay timer</string>
+    <string name="deletegoogle">Delete Google account</string>
+    <string name="languageselect">Change application language</string>
+    <string name="th">Thai</string>
+    <string name="en">English</string>
+    <string name="queslang">Select Language</string>
+    <string name="quesdelay">Select Your Choice</string>
+
+    <string name="settingarray1">Settings</string>
+    <string name="settingarray2">Help</string>
+    <string name="settingarray3">About us</string>
 
     <string-array name="settingarray">
-        <item>Settings</item>
-        <item>Help</item>
-        <item>About us</item>
+        <item>@string/settingarray1</item>
+        <item>@string/settingarray2</item>
+        <item>@string/settingarray3</item>
     </string-array>
+
+    <string name="startLockscreen">Touch anywhere to start.</string>
 
     <string name="title_activity_welcome">Home Screen</string>
     <string name="next">NEXT</string>
@@ -51,6 +80,7 @@
 
     <string name="slide_1_title">Welcome to</string>
     <string name="slide_1_desc">\t\t\t\t\tLearn English vocabularies efficiently and conveniently from your Lock Screen in just a few seconds!</string>
+    <string name="slide_1_desc1">Swipe left or touch next to go to the next page.</string>
 
     <string name="slide_2_title">Bike Ride</string>
     <string name="slide_2_desc">I love long drive bike ride with my friends!</string>

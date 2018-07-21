@@ -3,15 +3,20 @@ package th.ac.bodin.ppnt.englock;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import java.util.Locale;
 
 import th.ac.bodin.ppnt.englock.extra_assets.AboutDialog;
 import th.ac.bodin.ppnt.englock.extra_assets.BottomNavigationViewHelper;
@@ -109,6 +114,25 @@ public class MainActivity extends AppCompatActivity {
             Log.d("intro", "seen");
             Intro();
         }
+
+        shared = getSharedPreferences("Englock Settings", Context.MODE_PRIVATE);
+        int selectlang = shared.getInt("lang",0);
+        String lang = "en";
+        switch(selectlang)
+        {
+            case 0:
+                lang = "en";
+                break;
+            case 1:
+                lang = "th";
+                break;
+        }
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
     }
 
     public void Intro() {

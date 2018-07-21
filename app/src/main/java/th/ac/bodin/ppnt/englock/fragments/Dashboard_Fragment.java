@@ -39,6 +39,7 @@ public class Dashboard_Fragment extends Fragment {
     int correct0;
     boolean isZero = false;
 
+    String temp;
     String format = "%.1f";
 
     public static Dashboard_Fragment newInstance() {
@@ -87,7 +88,8 @@ public class Dashboard_Fragment extends Fragment {
             TextViewCompat.setAutoSizeTextTypeWithDefaults(desc, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
         }
 
-        desc.setText("(First choice/Seen : 0/" + String.valueOf(seen) + ")");
+        temp = getResources().getString(R.string.statswheel);
+        desc.setText(temp + " " + String.valueOf(seen) + ")");
 
         if(seen == 0){
             seen = 1;
@@ -114,7 +116,7 @@ public class Dashboard_Fragment extends Fragment {
             @Override
             public void onSeriesItemAnimationProgress(float percentComplete, float currentPosition) {
                 percentage1.setText(String.format(format,currentPosition/seen*100)+"%");
-                if(!isZero) desc.setText("(First choice/Seen : " + String.format("%.0f",currentPosition) + "/" + String.valueOf(seen) + ")");
+                if(!isZero) desc.setText(temp + " " + String.format("%.0f",currentPosition) + "/" + String.valueOf(seen) + ")");
             }
 
             @Override
@@ -137,7 +139,7 @@ public class Dashboard_Fragment extends Fragment {
         String[] temp = new String[3];
         String txt;
         for(int i = 0; i < 3; i++) temp[i] = shared.getString("Recent" + String.valueOf(i), " ");
-        txt = "• " + temp[0] + "\n\n• " + temp[1] + "\n\n• " + temp[2];
+        txt = "• " + temp[0] + "\n• " + temp[1] + "\n• " + temp[2];
         TextView mTextMessage = (TextView)getView().findViewById(R.id.recenttxt);
         mTextMessage.setText(txt);
     }

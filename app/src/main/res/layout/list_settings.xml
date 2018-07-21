@@ -23,7 +23,8 @@
         android:id="@+id/label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/thaisansneueregular"
         android:text="test"
-        android:textSize="18sp"></TextView>
+        android:textSize="26sp"></TextView>
 
 </LinearLayout>

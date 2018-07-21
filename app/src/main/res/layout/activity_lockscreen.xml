@@ -60,7 +60,7 @@
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/fc_lamoon"
+                android:fontFamily="@font/thaisansneueregular"
                 android:text="@string/txt_choice_A"
                 android:textSize="24sp" />
 
@@ -69,7 +69,7 @@
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/fc_lamoon"
+                android:fontFamily="@font/thaisansneueregular"
                 android:text="@string/txt_choice_B"
                 android:textSize="24sp" />
         </TableRow>
@@ -84,7 +84,7 @@
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/fc_lamoon"
+                android:fontFamily="@font/thaisansneueregular"
                 android:text="@string/txt_choice_C"
                 android:textSize="24sp" />
 
@@ -93,7 +93,7 @@
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/fc_lamoon"
+                android:fontFamily="@font/thaisansneueregular"
                 android:text="@string/txt_choice_D"
                 android:textSize="24sp" />
         </TableRow>
@@ -139,7 +139,7 @@
         android:text="@string/test_txt_th"
         android:textColor="@color/white"
         android:textSize="30sp"
-        app:fontFamily="@font/fc_lamoon"
+        app:fontFamily="@font/thaisansneueregular"
         app:layout_constraintBottom_toTopOf="@+id/choicestable"
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintStart_toEndOf="parent" />

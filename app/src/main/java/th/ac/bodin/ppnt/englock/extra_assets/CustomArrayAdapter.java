@@ -30,17 +30,16 @@ public class CustomArrayAdapter extends ArrayAdapter<String> {
         ImageView imageView = (ImageView) rowView.findViewById(R.id.logo);
         textView.setText(values[position]);
 
-        // Change icon based on name
-        String s = values[position];
-
-        System.out.println(s);
-
-        if (s.equals("Settings")) {
-            imageView.setImageResource(R.drawable.ic_settings_black_24dp);
-        } else if (s.equals("Help")) {
-            imageView.setImageResource(R.drawable.ic_help_black_24dp);
-        } else {
-            imageView.setImageResource(R.drawable.ic_more_black_24dp);
+        switch (position) {
+            case 0:
+                imageView.setImageResource(R.drawable.ic_settings_black_24dp);
+                break;
+            case 1:
+                imageView.setImageResource(R.drawable.ic_help_black_24dp);
+                break;
+            case 2:
+                imageView.setImageResource(R.drawable.ic_more_black_24dp);
+                break;
         }
 
         return rowView;

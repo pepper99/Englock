@@ -1,5 +1,6 @@
 package th.ac.bodin.ppnt.englock;
 
+import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
@@ -30,6 +31,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private int[] layouts;
     private Button btnSkip, btnNext;
 
+    ObjectAnimator anim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,16 +136,6 @@ public class WelcomeActivity extends AppCompatActivity {
                 btnNext.setText(getString(R.string.next));
                 btnSkip.setVisibility(View.VISIBLE);
             }
-
-            if (position == 0) {
-                ImageView finger = (ImageView) findViewById(R.id.fingerswipe);
-                ObjectAnimator anim = ObjectAnimator.ofFloat(finger, View.ROTATION_Y , 360);
-                anim.setInterpolator(new AccelerateDecelerateInterpolator());
-                anim.setDuration(2000);
-                anim.setRepeatCount(ObjectAnimator.INFINITE);
-                anim.setRepeatMode(ObjectAnimator.RESTART);
-                anim.start();
-            }
         }
 
         @Override
@@ -183,6 +175,35 @@ public class WelcomeActivity extends AppCompatActivity {
 
             View view = layoutInflater.inflate(layouts[position], container, false);
             container.addView(view);
+
+            btnSkip.setText(getResources().getString(R.string.skip));
+
+            if (position == 0) {
+                ImageView finger = (ImageView) findViewById(R.id.fingerswipe);
+                anim = ObjectAnimator.ofFloat(finger, View.TRANSLATION_X, -500f);
+                anim.setDuration(1000);
+                anim.setInterpolator(new AccelerateDecelerateInterpolator());
+                anim.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        anim.setStartDelay(2000);
+                        anim.start();
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+                    }
+                });
+                anim.start();
+            }
 
             return view;
         }

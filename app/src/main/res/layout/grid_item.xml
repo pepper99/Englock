@@ -46,7 +46,7 @@
 
     <FrameLayout
         android:layout_width="200dp"
-        android:layout_height="22dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp">
 
         <TextView
@@ -54,10 +54,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="@font/thaisansneueregular"
             android:gravity="center"
             android:text="Title"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="17sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
     </FrameLayout>
 
@@ -66,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical|center_horizontal|center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
@@ -84,8 +85,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:fontFamily="@font/thaisansneuelight"
             android:text="Description"
             android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="18sp"
             android:visibility="visible" />
 
     </LinearLayout>

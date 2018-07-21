@@ -6,25 +6,25 @@
         android:id="@+id/item_home"
         android:enabled="true"
         android:title="Home"
-        android:showAsAction="always|withText"
-        android:icon="@drawable/ic_home_black_24dp"/>
+        android:icon="@drawable/ic_home_black_24dp"
+        app:showAsAction="always|withText" />
     <item
         android:id="@+id/item_dashboard"
         android:enabled="true"
         android:title="Dashboard"
-        android:showAsAction="always|withText"
-        android:icon="@drawable/ic_dashboard_black_24dp" />
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        app:showAsAction="always|withText" />
     <item
         android:id="@+id/item_shop"
         android:enabled="true"
         android:title="Shop"
-        android:showAsAction="always|withText"
-        android:icon="@drawable/ic_shop_two_black_24dp" />
+        android:icon="@drawable/ic_shop_two_black_24dp"
+        app:showAsAction="always|withText" />
     <item
         android:id="@+id/item_more"
         android:enabled="true"
         android:title="More"
-        android:showAsAction="always|withText"
-        android:icon="@drawable/ic_more_black_24dp" />
+        android:icon="@drawable/ic_more_black_24dp"
+        app:showAsAction="always|withText" />
 
 </menu>

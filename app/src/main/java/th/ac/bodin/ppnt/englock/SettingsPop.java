@@ -2,11 +2,15 @@ package th.ac.bodin.ppnt.englock;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,13 +18,16 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.util.Locale;
+
 public class SettingsPop extends AppCompatActivity {
 
     SharedPreferences shared;
     Switch lockscreenToggle;
-    Button timerbutton, revokebutton;
+    Button timerbutton, revokebutton, changelangbutton;
     AlertDialog alertDialog1;
     CharSequence[] timechoices = {"0 Second ","3 Seconds","5 Seconds","10 Seconds","20 Seconds"};
+    String lang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +37,7 @@ public class SettingsPop extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Settings");
+        getSupportActionBar().setTitle(getResources().getString(R.string.settingarray1));
 
         lockscreenToggle = (Switch) findViewById(R.id.togglelock);
         lockscreenToggle.setOnCheckedChangeListener (null);
@@ -48,6 +55,7 @@ public class SettingsPop extends AppCompatActivity {
 
         timerbutton = (Button) findViewById(R.id.quiztimersetter);
         revokebutton = (Button) findViewById(R.id.revokeacnt);
+        changelangbutton = (Button) findViewById(R.id.changeLang);
 
         timerbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +67,12 @@ public class SettingsPop extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 revokeAccount();
+            }
+        });
+        changelangbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeLang();
             }
         });
     }
@@ -110,7 +124,8 @@ public class SettingsPop extends AppCompatActivity {
     private void lockscreenTimer() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("Select Your Choice");
+        String ques = getResources().getString(R.string.quesdelay);
+        builder.setTitle(ques);
 
         SharedPreferences shared = getSharedPreferences("Englock Settings", Context.MODE_PRIVATE);
         int delaycase = shared.getInt("delaycase",0);
@@ -144,6 +159,53 @@ public class SettingsPop extends AppCompatActivity {
         });
         alertDialog1 = builder.create();
         alertDialog1.show();
+    }
 
+    private void changeLang() {
+
+        lang = "en";
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        String ques = getResources().getString(R.string.queslang);
+        builder.setTitle(ques);
+
+        SharedPreferences shared = getSharedPreferences("Englock Settings", Context.MODE_PRIVATE);
+        int selectlang = shared.getInt("lang",0);
+        final SharedPreferences.Editor editor = shared.edit();
+
+        CharSequence[] langchoices = {getResources().getString(R.string.en),getResources().getString(R.string.th)};
+        builder.setSingleChoiceItems(langchoices, selectlang, new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int item) {
+                editor.putInt("lang", item);
+                editor.commit();
+                switch(item)
+                {
+                    case 0:
+                        lang = "en";
+                        break;
+                    case 1:
+                        lang = "th";
+                        break;
+                }
+                alertDialog1.dismiss();
+                Locale myLocale = new Locale(lang);
+                Resources res = getResources();
+                DisplayMetrics dm = res.getDisplayMetrics();
+                Configuration conf = res.getConfiguration();
+                conf.locale = myLocale;
+                res.updateConfiguration(conf, dm);
+                startMain();
+
+            }
+        });
+        alertDialog1 = builder.create();
+        alertDialog1.show();
+    }
+
+    private void startMain() {
+        Intent refresh = new Intent(this, MainActivity.class);
+        startActivity(refresh);
+        finish();
     }
 }

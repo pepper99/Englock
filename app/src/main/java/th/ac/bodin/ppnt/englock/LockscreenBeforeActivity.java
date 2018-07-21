@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.vansuita.gaussianblur.GaussianBlur;
@@ -33,6 +34,14 @@ public class LockscreenBeforeActivity extends Activity{
         super.onCreate(savedInstanceState);
         makeFullScreen();
         setContentView(R.layout.activity_before_lockscreen);
+
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.beforelockLayout);
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startClick(v);
+            }
+        });
 
         wallpaperManager = WallpaperManager.getInstance(this);
         wallpaperDrawable = wallpaperManager.getDrawable();
@@ -60,14 +69,14 @@ public class LockscreenBeforeActivity extends Activity{
 
         keyImage.setVisibility(View.INVISIBLE);
         unlockTXT.setVisibility(View.INVISIBLE);
-        pBar.setVisibility(View.VISIBLE);
-        cntdownTxt.setVisibility(View.VISIBLE);
 
         SharedPreferences shared = getSharedPreferences("Englock Settings", Context.MODE_PRIVATE);
         int delay = shared.getInt("delay",0);
         Log.d("delay",String.valueOf(delay));
 
         if(delay > 0) {
+            pBar.setVisibility(View.VISIBLE);
+            cntdownTxt.setVisibility(View.VISIBLE);
             CountDownTimer cdt = new CountDownTimer(delay * 1000, 1000) {
                 public void onTick(long millisUntilFinished) {
                     int temp = (int) millisUntilFinished / 1000;
@@ -99,7 +108,8 @@ public class LockscreenBeforeActivity extends Activity{
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(i);
 
-            overridePendingTransition(R.anim.mainfadein, R.anim.mainfadeout);
+            overridePendingTransition(R.layout.mainfadein, R.layout.mainfadeout);
+
             finish();
         }
     }

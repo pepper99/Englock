@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/relativeLayout"
+    android:id="@+id/beforelockLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LockscreenBeforeActivity">
@@ -40,11 +40,12 @@
 
     <ImageView
         android:id="@+id/keyImage"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="180dp"
+        android:layout_height="120dp"
+        android:paddingLeft="50dp"
+        android:rotation="-25"
         android:layout_centerInParent="true"
-        android:onClick="startClick"
-        android:src="@drawable/ic_vpn_key_black_24dp"
+        android:src="@drawable/ic_touch_app_white_64dp"
         android:tint="@color/white" />
 
     <TextView
@@ -62,11 +63,13 @@
         android:id="@+id/unlockLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/keyImage"
+        android:layout_below="@+id/keyImage"
         android:layout_centerHorizontal="true"
-        android:text="UNLOCK"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/thaisansneueregular"
+        android:text="@string/startLockscreen"
         android:textColor="@color/white"
-        android:textSize="24sp" />
+        android:textSize="30sp" />
 
 
 </RelativeLayout>

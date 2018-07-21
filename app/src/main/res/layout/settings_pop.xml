@@ -32,6 +32,7 @@
     <FrameLayout
         android:id="@+id/frameLayout3"
         android:layout_width="0dp"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,14 +42,14 @@
             android:id="@+id/togglelock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:checked="false"
-            android:fontFamily="sans-serif"
-            android:text="Lock screen quiz"
-            android:textSize="16sp"
+            android:fontFamily="@font/thaisansneueregular"
+            android:text="@string/lockscreenquiz"
+            android:textSize="28sp"
             tools:checked="false" />
 
     </FrameLayout>
@@ -56,7 +57,7 @@
     <FrameLayout
         android:id="@+id/frameLayout4"
         android:layout_width="0dp"
-        android:layout_height="54dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,21 +68,21 @@
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="sans-serif"
+            android:fontFamily="@font/thaisansneueregular"
             android:gravity="left|center_vertical"
             android:onClick="lockscreenTimer"
             android:paddingLeft="19dp"
             android:paddingStart="19dp"
-            android:text="Quiz delay timer"
+            android:text="@string/delay"
             android:textAllCaps="false"
-            android:textSize="16sp" />
+            android:textSize="28sp" />
 
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/frameLayout5"
         android:layout_width="0dp"
-        android:layout_height="54dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,38 +93,38 @@
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="sans-serif"
+            android:fontFamily="@font/thaisansneueregular"
             android:gravity="left|center_vertical"
             android:paddingLeft="19dp"
             android:paddingStart="19dp"
-            android:text="Delete Google account"
+            android:text="@string/deletegoogle"
             android:textAllCaps="false"
-            android:textSize="16sp" />
+            android:textSize="28sp" />
 
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/frameLayout6"
         android:layout_width="0dp"
-        android:layout_height="54dp"
-        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout5">
 
         <Button
-            android:id="@+id/clearData"
+            android:id="@+id/changeLang"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="sans-serif"
+            android:fontFamily="@font/thaisansneueregular"
             android:gravity="left|center_vertical"
             android:paddingLeft="19dp"
             android:paddingStart="19dp"
-            android:text="Revoke account"
+            android:text="@string/languageselect"
             android:textAllCaps="false"
-            android:textSize="16sp" />
+            android:textSize="28sp" />
 
     </FrameLayout>
 

@@ -95,11 +95,11 @@ public class Shop_Fragment extends Fragment {
         boolean[] selecter = checkSelect();
         
         productList = new ArrayList<>();
-        productList.add(new Product(R.drawable.db_school_small, "School", "Default", 200, checker[0], selecter[0]));
-        productList.add(new Product(R.drawable.db_clothes_small, "Clothes", "400", 400, checker[1], selecter[1]));
-        productList.add(new Product(R.drawable.db_emotions_small, "Emotions", "800", 800, checker[2], selecter[2]));
-        productList.add(new Product(R.drawable.db_etiquette_small, "Etiquette", "1500", 1500, checker[3], selecter[3]));
-        productList.add(new Product(R.drawable.db_landforms_small, "Landforms", "2000", 2000, checker[4], selecter[4]));
+        productList.add(new Product(R.drawable.db_school_small, getResources().getString(R.string.product1), "Default", 200, checker[0], selecter[0]));
+        productList.add(new Product(R.drawable.db_clothes_small, getResources().getString(R.string.product2), "400", 400, checker[1], selecter[1]));
+        productList.add(new Product(R.drawable.db_emotions_small, getResources().getString(R.string.product3), "800", 800, checker[2], selecter[2]));
+        productList.add(new Product(R.drawable.db_etiquette_small, getResources().getString(R.string.product4), "1500", 1500, checker[3], selecter[3]));
+        productList.add(new Product(R.drawable.db_landforms_small, getResources().getString(R.string.product5), "2000", 2000, checker[4], selecter[4]));
         
         return productList;
     }
@@ -122,7 +122,7 @@ public class Shop_Fragment extends Fragment {
 
         SharedPreferences shoppee = getActivity().getSharedPreferences("Englock Shop Stats", Context.MODE_PRIVATE);
 
-        int selected = shoppee.getInt("selected", -1);
+        int selected = shoppee.getInt("selected", 0);
 
         for (int i = 0; i < n; i++){
             if( i == selected ) checker[i] = true;
@@ -150,8 +150,9 @@ public class Shop_Fragment extends Fragment {
             }
             else {
                 long price = productList.get(position).getPrice();
-                String AlertTxt = "Are you sure you want to buy\n\"" + productList.get(position).getTitle()
-                        + "\" for " + String.valueOf(price) + " coins?";
+                String AlertTxt = getResources().getString(R.string.buyquestion1) + "\n\"" + productList.get(position).getTitle()
+                        + getResources().getString(R.string.buyquestion2) + String.valueOf(price) + " "
+                        + getResources().getString(R.string.buyquestion3);
                 ShopDialog alert = new ShopDialog.Builder()
                         .setMessage(AlertTxt)
                         .setImage(productList.get(position).getImageId())
