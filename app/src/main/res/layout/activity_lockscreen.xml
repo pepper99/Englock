@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LockscreenActivity">
+
+    <ImageView
+        android:id="@+id/coverup"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:adjustViewBounds="false"
+        android:alpha="1"
+        android:background="@android:color/background_dark"
+        android:contentDescription="transparency coverup of bg"
+        android:scaleType="centerCrop"
+        android:src="@android:color/background_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/wallpp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0.5"
+        android:contentDescription="wallpaper bg"
+        android:scaleType="centerCrop"
+        android:src="@color/white"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.504" />
+
+    <TableLayout
+        android:id="@+id/choicestable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="70dp"
+        app:layout_constraintBottom_toTopOf="@+id/progressR"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/choiceA"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/fc_lamoon"
+                android:text="@string/txt_choice_A"
+                android:textSize="24sp" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/choiceB"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/fc_lamoon"
+                android:text="@string/txt_choice_B"
+                android:textSize="24sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|center_horizontal">
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/choiceC"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/fc_lamoon"
+                android:text="@string/txt_choice_C"
+                android:textSize="24sp" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/choiceD"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/fc_lamoon"
+                android:text="@string/txt_choice_D"
+                android:textSize="24sp" />
+        </TableRow>
+    </TableLayout>
+
+    <com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar
+        android:id="@+id/progressR"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="80dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rcBackgroundColor="#4ea1a1a1"
+        app:rcBackgroundPadding="3dp"
+        app:rcIconBackgroundColor="@color/pink_dark"
+        app:rcIconPadding="4dp"
+        app:rcIconSize="40dp"
+        app:rcIconSrc="@drawable/ic_timer_white_24dp"
+
+        app:rcMax="10"
+        app:rcProgress="10"
+
+        app:rcProgressColor="@color/accent_pink"
+        app:rcRadius="7dp"
+        app:rcReverse="false" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/question_txtview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginStart="32dp"
+        android:fontFamily="@font/fc_lamoon"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/test_txt_th"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:fontFamily="@font/fc_lamoon"
+        app:layout_constraintBottom_toTopOf="@+id/choicestable"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="0dp"
+        android:layout_height="78dp"
+        android:layout_marginBottom="64dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/englock_icon_pink"
+        android:tint="#b1ff3d80"
+        app:layout_constraintBottom_toTopOf="@+id/question_txtview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

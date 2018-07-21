@@ -1,0 +1,35 @@
+<resources>
+    <!-- inherit from the material theme -->
+    <style name="TestTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    </style>
+    
+    <style name="ThemeGreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/green</item>
+        <item name="colorPrimaryDark">@color/dark_green</item>
+    </style>
+
+    <style name="ThemePink" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorAccent">@color/accent_pink</item>
+        <item name="colorPrimaryDark">@color/pink_dark</item>
+        <item name="colorPrimary">@color/accent_pink</item>
+    </style>
+
+    <style name="LockscreenTheme" parent="ThemePink">
+        <item name="android:windowAnimationStyle">@style/MyAnimation.Lockscreen</item>
+    </style>
+
+    <style name="DialogTheme" parent="TestTheme">
+        <item name="android:windowAnimationStyle">@style/MyAnimation.Window</item>
+    </style>
+
+    <style name="MyAnimation.Lockscreen" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/mainfadein</item>
+        <item name="android:activityCloseExitAnimation">@anim/mainfadeout</item>
+    </style>
+
+    <style name="MyAnimation.Window" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/anim_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_out</item>
+    </style>
+
+</resources>

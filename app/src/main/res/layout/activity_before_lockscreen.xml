@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LockscreenBeforeActivity">
+
+    <ImageView
+        android:id="@+id/coverupb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="false"
+        android:alpha="1"
+        android:background="@android:color/background_dark"
+        android:contentDescription="transparency coverup of bg"
+        android:scaleType="centerCrop"
+        android:src="@android:color/background_dark" />
+
+    <ImageView
+        android:id="@+id/wallppb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.3"
+        android:contentDescription="wallpaper bg"
+        android:scaleType="centerCrop"
+        android:src="@color/white"
+        android:visibility="visible" />
+
+    <ProgressBar
+        android:id="@+id/pBarBL"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_centerInParent="true"
+        android:max="3"
+        android:progress="4"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/keyImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerInParent="true"
+        android:onClick="startClick"
+        android:src="@drawable/ic_vpn_key_black_24dp"
+        android:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/cntdownTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="3"
+        android:textColor="@color/white"
+        android:textSize="106sp"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/unlockLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/keyImage"
+        android:layout_centerHorizontal="true"
+        android:text="UNLOCK"
+        android:textColor="@color/white"
+        android:textSize="24sp" />
+
+
+</RelativeLayout>
