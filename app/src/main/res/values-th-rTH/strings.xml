@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Englock</string>
-    <string name="full_app_name">Englock: เรียนรู้จากภาษาอังกฤษ</string>
+    <string name="full_app_name">Englock: เรียนรู้จากล็อกสกรีน</string>
     <string name="test_txt">ทดสอบ</string>
     <string name="yes">ตกลง</string>
     <string name="no">ยกเลิก</string>
@@ -18,12 +18,12 @@
     <string name="product3">อารมณ์</string>
     <string name="product4">มารยาทสังคม</string>
     <string name="product5">ธรณีสัณฐาน</string>
-    <string name="buyquestion1">คุณแน่ใจหรือไม่ที่จะซื้อ</string>
-    <string name="buyquestion2">ในราคา</string>
-    <string name="buyquestion3">แต้ม</string>
+    <string name="buyquestion1">คุณแน่ใจหรือไม่ที่จะซื้อคำศัพท์หมวด</string>
+    <string name="buyquestion2">\" ในราคา</string>
+    <string name="buyquestion3">เหรียญ</string>
     <string name="lockscreenquiz">คำถามหน้าล็อกสกรีน</string>
     <string name="deletegoogle">ลบบัญชีผู้ใช้กูเกิล</string>
-    <string name="languageselect">เปลี่ยนภาษาของแอปพลีเคชั่น</string>
+    <string name="languageselect">เปลี่ยนภาษาของแอปพลิเคชัน</string>
     <string name="th">ไทย</string>
     <string name="en">อังกฤษ</string>
     <string name="startLockscreen">สัมผัสบนหน้าจอเพื่อเริ่มคำถาม</string>
@@ -32,7 +32,7 @@
     <string name="skip">ข้าม</string>
     <string name="start">รับทราบ</string>
     <string name="slide_1_desc1">ปาดซ้ายหรือกดปุ่มถัดไปเพื่อไปสู่หน้าต่อไป</string>
-    <string name="slide_1_desc">เรียนรู้คำศัพท์ภาษาอังกฤษอย่างมีประสิทธิภาพและง่ายดายจากหน้าจอล็อกสกรีนของคุณ!</string>
+    <string name="slide_1_desc">\t\t\t\t\tเรียนรู้คำศัพท์ภาษาอังกฤษอย่างง่ายดายและมีประสิทธิภาพจากหน้าจอล็อกสกรีนของคุณ!</string>
     <string name="delay">ระยะเวลาก่อนเริ่มคำถาม</string>
     <string name="settingarray2">ช่วยเหลือ</string>
     <string name="settingarray3">เกี่ยวกับเรา</string>
@@ -40,4 +40,27 @@
     <string name="bought">ซื้อแล้ว</string>
     <string name="queslang">โปรดเลือกภาษา</string>
     <string name="quesdelay">โปรดเลือกระยะเวลา</string>
+    <string name="confirmation">โปรดยืนยัน</string>
+    <string name="signoutgg">คุณแน่ใจหรือไม่ที่จะลบบัญชีกูเกิลของคุณ\n(สถิติต่างๆ จะไม่ถูกลบ)</string>
+    <string name="second">วินาที</string>
+    <string name="seconds">วินาที</string>
+    <string name="slide_2_desc1">สัมผัสบนหน้าจอเพื่อเริ่มคำถามของคุณ!</string>
+    <string name="slide_2_desc2">เลือกคำตอบของคุณ พยายามเลือกให้เร็วและถูกในครั้งเดียวเพื่อเหรียญที่เยอะขึ้น</string>
+    <string name="slide_2_desc3">มีเวลาจำกัด ดังนั้นคิดให้ไว!</string>
+    <string name="slide_2_desc">หน้าจอจะปรากฏในหน้าล็อกสกรีนของคุณ</string>
+    <string name="slide_3_desc">ภายในหน้านี้จะแสดงข้อมูลทั่วไป อย่างจำนวนเหรียญที่คุณมีและบัญชีกูเกิลของคุณ</string>
+    <string name="slide_3_desc1">ในหน้านี้จะแสดงถึงสถิติของคุณ ซึ่งจะช่วยให้คุณสามารถวิเคราะห์และพัฒนาให้เก่งยิ่งขึ้น!</string>
+    <string name="slide_3_desc2">และที่สำคัญเราก็ยังเก็บสถิติของคำที่คุณพบเจอมาแล้ว เพื่อให้คุณไม่พลาดในกรณีที่คุณต้องการย้อนดูอีกครั้ง</string>
+    <string name="slide_4_title">ร้านค้า</string>
+    <string name="slide_3_title2">แดชบอร์ด</string>
+    <string name="slide_3_title1">หน้าหลัก</string>
+    <string name="slide_4_desc">นี่คือที่สำหรับจับจ่ายเหรียญที่คุณหามาได้ ปลดล็อกคำศัพท์ใหม่ๆ ที่น่าสนใจยิ่งขึ้น เพื่อพัฒนาทักษะของเราให้สูงยิ่งขึ้นไปอีก!</string>
+    <string name="slide_5_desc">เรียนรู้เพิ่มเติมเกี่ยวกับ Englock\n\t\t\t\t\tรวมถึงปรับแต่งให้เข้ากับตัวคุณ</string>
+    <string name="slide_6_desc">ขอให้สนุกกับ</string>
+    <string name="slide_6_desc1">(คุณสามารถกดดูได้อีกรอบผ่านปุ่มช่วยเหลือในหน้าเพิ่มเติม)</string>
+    <string name="slide_5_title">เพิ่มเติม</string>
+    <string name="title_home">หน้าหลัก</string>
+    <string name="title_dashboard">แดชบอร์ด</string>
+    <string name="title_shop">ร้านค้า</string>
+    <string name="title_more">เพิ่มเติม</string>
 </resources>

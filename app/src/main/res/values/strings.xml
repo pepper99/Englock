@@ -47,7 +47,7 @@
     <string name="product4">Etiquette</string>
     <string name="product5">Landforms</string>
     <string name="buyquestion1">Are you sure you want to buy</string>
-    <string name="buyquestion2">"for "</string>
+    <string name="buyquestion2">\" vocabulary category for</string>
     <string name="buyquestion3">coins?</string>
     <string name="bought">Bought</string>
 
@@ -60,6 +60,10 @@
     <string name="en">English</string>
     <string name="queslang">Select Language</string>
     <string name="quesdelay">Select Your Choice</string>
+    <string name="confirmation">Confirmation</string>
+    <string name="signoutgg">Do you want to delete your Google account?\n(Your records will not be deleted.)</string>
+    <string name="second">Second></string>
+    <string name="seconds">Seconds></string>
 
     <string name="settingarray1">Settings</string>
     <string name="settingarray2">Help</string>
@@ -82,17 +86,27 @@
     <string name="slide_1_desc">\t\t\t\t\tLearn English vocabularies efficiently and conveniently from your Lock Screen in just a few seconds!</string>
     <string name="slide_1_desc1">Swipe left or touch next to go to the next page.</string>
 
-    <string name="slide_2_title">Bike Ride</string>
-    <string name="slide_2_desc">I love long drive bike ride with my friends!</string>
+    <string name="slide_2_desc">This will appear on your Lock Screen.</string>
+    <string name="slide_2_desc1">Touch anywhere to start your quiz!</string>
+    <string name="slide_2_desc2">Choose your answer.\nTry to get it right on first try to earn more coins.</string>
+    <string name="slide_2_desc3">There\'s time limit so think fast!</string>
 
-    <string name="slide_3_title">Pool Swimming</string>
-    <string name="slide_3_desc">I can spend hours in swimmng pool with some food!</string>
+    <string name="slide_3_title1">Home</string>
+    <string name="slide_3_title2">Dashboard</string>
+    <string name="slide_3_desc">This will show basic information, like coins and your Google account.</string>
+    <string name="slide_3_desc1">Here is how you perform. You can analyze from this and improve yourself even better!</string>
+    <string name="slide_3_desc2">And we also keep records of your recently seen words, so you won\'t be missed in case you want to review them.</string>
 
-    <string name="slide_4_title">Rowing</string>
-    <string name="slide_4_desc">Wonder thunder ride in rowing in river always amazing!</string>
+    <string name="slide_4_title">Shop</string>
+    <string name="slide_4_desc">Here is where you put your coins to use.\nGet your new and even more exciting vocabulary categories to improve your skills even further!</string>
+    <string name="slide_4_desc1" translatable="false">The more,\n\t\t\t\t\t\t\tthe better!</string>
 
-    <string name="slide_5_title">Rowing</string>
-    <string name="slide_5_desc">Wonder thunder ride in rowing in river always amazing!</string>
+    <string name="slide_5_title">More</string>
+    <string name="slide_5_desc">Find out more about Englock.\n\t\t\t\t\tAdjust Englock to your liking.</string>
+    <string name="slide_5_desc1" translatable="false">Your app, your way.</string>
+
+    <string name="slide_6_desc">Enjoy using</string>
+    <string name="slide_6_desc1">(You can watch this again in Help of More section)</string>
 
     <string name="welcomescreen"> Welcome to Home Screen</string>
 

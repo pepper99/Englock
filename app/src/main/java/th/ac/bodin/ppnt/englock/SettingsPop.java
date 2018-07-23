@@ -26,7 +26,6 @@ public class SettingsPop extends AppCompatActivity {
     Switch lockscreenToggle;
     Button timerbutton, revokebutton, changelangbutton;
     AlertDialog alertDialog1;
-    CharSequence[] timechoices = {"0 Second ","3 Seconds","5 Seconds","10 Seconds","20 Seconds"};
     String lang;
 
     @Override
@@ -89,8 +88,13 @@ public class SettingsPop extends AppCompatActivity {
         if (isACsaved) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-            builder.setTitle("Confirmation");
-            builder.setMessage("Do you want to delete your Google account?\n(Your records will not be deleted.)");
+            String title = getResources().getString(R.string.confirmation);
+            String desc = getResources().getString(R.string.signoutgg);
+            String yes = getResources().getString(R.string.yes);
+            String no = getResources().getString(R.string.no);
+
+            builder.setTitle(title);
+            builder.setMessage(desc);
 
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
@@ -107,8 +111,8 @@ public class SettingsPop extends AppCompatActivity {
                     alertDialog1.dismiss();
                 }
             };
-            builder.setPositiveButton("YES", dialogClickListener);
-            builder.setNegativeButton("NO", dialogClickListener);
+            builder.setPositiveButton(yes, dialogClickListener);
+            builder.setNegativeButton(no, dialogClickListener);
             alertDialog1 = builder.create();
             alertDialog1.show();
         }
@@ -124,8 +128,12 @@ public class SettingsPop extends AppCompatActivity {
     private void lockscreenTimer() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        String secs = getResources().getString(R.string.seconds);
+        String sec = getResources().getString(R.string.second);
         String ques = getResources().getString(R.string.quesdelay);
         builder.setTitle(ques);
+
+        CharSequence[] timechoices = {"0 " + sec, "3 " + secs, "5 " + secs, "10 " + secs, "20 " + secs};
 
         SharedPreferences shared = getSharedPreferences("Englock Settings", Context.MODE_PRIVATE);
         int delaycase = shared.getInt("delaycase",0);

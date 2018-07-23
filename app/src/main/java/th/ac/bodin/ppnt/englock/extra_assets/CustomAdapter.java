@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import th.ac.bodin.ppnt.englock.R;
@@ -37,7 +39,9 @@ public class CustomAdapter extends ArrayAdapter<Product> {
         TextView txtTitle = (TextView) v.findViewById(R.id.txtTitle);
         TextView txtDescription = (TextView) v.findViewById(R.id.txtDescription);
 
-        img.setImageResource(product.getImageId());
+        Picasso.get()
+                .load(product.getImageId())
+                .into(img);
         txtTitle.setText(product.getTitle());
         txtDescription.setText(product.getDescription());
         tick.setVisibility(View.INVISIBLE);

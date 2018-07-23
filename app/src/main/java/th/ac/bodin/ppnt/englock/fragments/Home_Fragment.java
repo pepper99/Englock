@@ -1,13 +1,10 @@
 package th.ac.bodin.ppnt.englock.fragments;
 
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -185,11 +181,10 @@ public class Home_Fragment extends Fragment {
         ProfilePic = (ImageView)getView().findViewById(R.id.ProfileImage);
         personPhoto = Uri.parse(uri);
         Picasso.get()
-                .load("http://i.imgur.com/DvpvklR.png")
-                //.load(uril)
-                .placeholder(R.drawable.ic_person_black_24dp)
-                .error(R.drawable.ic_person_black_24dp)
-                .resize(131, 131)
+                .load(uril)
+                .placeholder(R.drawable.ic_account_circle_black_24dp)
+                .error(R.drawable.ic_account_circle_black_24dp)
+                .resize(220,220)
                 .centerCrop()
                 .into(ProfilePic);
 

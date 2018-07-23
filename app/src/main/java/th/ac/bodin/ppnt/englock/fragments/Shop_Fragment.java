@@ -151,7 +151,7 @@ public class Shop_Fragment extends Fragment {
             else {
                 long price = productList.get(position).getPrice();
                 String AlertTxt = getResources().getString(R.string.buyquestion1) + "\n\"" + productList.get(position).getTitle()
-                        + getResources().getString(R.string.buyquestion2) + String.valueOf(price) + " "
+                        + getResources().getString(R.string.buyquestion2) + " " + String.valueOf(price) + " "
                         + getResources().getString(R.string.buyquestion3);
                 ShopDialog alert = new ShopDialog.Builder()
                         .setMessage(AlertTxt)

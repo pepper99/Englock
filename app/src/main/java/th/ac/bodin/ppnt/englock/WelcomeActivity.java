@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -57,7 +58,8 @@ public class WelcomeActivity extends AppCompatActivity {
                 R.layout.intro_2,
                 R.layout.intro_3,
                 R.layout.intro_4,
-                R.layout.intro_5};
+                R.layout.intro_5,
+                R.layout.intro_6};
 
         // adding bottom dots
         addBottomDots(0);
@@ -177,6 +179,7 @@ public class WelcomeActivity extends AppCompatActivity {
             container.addView(view);
 
             btnSkip.setText(getResources().getString(R.string.skip));
+            btnNext.setText(getResources().getString(R.string.next));
 
             if (position == 0) {
                 ImageView finger = (ImageView) findViewById(R.id.fingerswipe);
@@ -202,6 +205,16 @@ public class WelcomeActivity extends AppCompatActivity {
                     public void onAnimationRepeat(Animator animation) {
                     }
                 });
+                anim.start();
+            }
+
+            else if (position == 3) {
+                ImageView coins = (ImageView) findViewById(R.id.introcoins);
+                ObjectAnimator anim = ObjectAnimator.ofFloat(coins, View.ROTATION_Y , 360);
+                anim.setInterpolator(new AccelerateDecelerateInterpolator());
+                anim.setDuration(2000);
+                anim.setRepeatCount(ObjectAnimator.INFINITE);
+                anim.setRepeatMode(ObjectAnimator.RESTART);
                 anim.start();
             }
 
