@@ -9,13 +9,12 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import java.util.Locale;
@@ -23,8 +22,9 @@ import java.util.Locale;
 public class SettingsPop extends AppCompatActivity {
 
     SharedPreferences shared;
-    Switch lockscreenToggle;
-    Button timerbutton, revokebutton, changelangbutton;
+    SharedPreferences.Editor editor;
+    SwitchCompat lockscreenToggle;
+    Button timerbutton, revokebutton, changelangbutton, haxbtn;
     AlertDialog alertDialog1;
     String lang;
 
@@ -38,7 +38,7 @@ public class SettingsPop extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(getResources().getString(R.string.settingarray1));
 
-        lockscreenToggle = (Switch) findViewById(R.id.togglelock);
+        lockscreenToggle = (SwitchCompat) findViewById(R.id.togglelock);
         lockscreenToggle.setOnCheckedChangeListener (null);
         shared = getSharedPreferences("Englock Settings", Context.MODE_PRIVATE);
         Boolean isOn = shared.getBoolean("isOn",true);
@@ -55,6 +55,7 @@ public class SettingsPop extends AppCompatActivity {
         timerbutton = (Button) findViewById(R.id.quiztimersetter);
         revokebutton = (Button) findViewById(R.id.revokeacnt);
         changelangbutton = (Button) findViewById(R.id.changeLang);
+        haxbtn = (Button) findViewById(R.id.hax);
 
         timerbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +73,12 @@ public class SettingsPop extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 changeLang();
+            }
+        });
+        haxbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Hax();
             }
         });
     }
@@ -135,9 +142,9 @@ public class SettingsPop extends AppCompatActivity {
 
         CharSequence[] timechoices = {"0 " + sec, "3 " + secs, "5 " + secs, "10 " + secs, "20 " + secs};
 
-        SharedPreferences shared = getSharedPreferences("Englock Settings", Context.MODE_PRIVATE);
+        shared = getSharedPreferences("Englock Settings", Context.MODE_PRIVATE);
         int delaycase = shared.getInt("delaycase",0);
-        final SharedPreferences.Editor editor = shared.edit();
+        editor = shared.edit();
 
         builder.setSingleChoiceItems(timechoices, delaycase, new DialogInterface.OnClickListener() {
 
@@ -179,7 +186,7 @@ public class SettingsPop extends AppCompatActivity {
 
         SharedPreferences shared = getSharedPreferences("Englock Settings", Context.MODE_PRIVATE);
         int selectlang = shared.getInt("lang",0);
-        final SharedPreferences.Editor editor = shared.edit();
+        editor = shared.edit();
 
         CharSequence[] langchoices = {getResources().getString(R.string.en),getResources().getString(R.string.th)};
         builder.setSingleChoiceItems(langchoices, selectlang, new DialogInterface.OnClickListener() {
@@ -215,5 +222,14 @@ public class SettingsPop extends AppCompatActivity {
         Intent refresh = new Intent(this, MainActivity.class);
         startActivity(refresh);
         finish();
+    }
+
+    private void Hax() {
+        SharedPreferences shared = getSharedPreferences("Englock Points", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = shared.edit();
+        long h = shared.getLong("pointsCount", 0) + 100;
+        editor.putLong("pointsCount", h );
+        Toast.makeText(this, "+100 = " + String.valueOf(h), Toast.LENGTH_SHORT).show();
+        editor.commit();
     }
 }

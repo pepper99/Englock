@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -127,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 lang = "th";
                 break;
         }
+
         Locale myLocale = new Locale(lang);
         Resources res = getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
@@ -141,18 +143,14 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void Hax(View view) {
-        SharedPreferences shared = getSharedPreferences("Englock Points", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = shared.edit();
-        long h = shared.getLong("pointsCount", 0) + 100;
-        editor.putLong("pointsCount", h );
-        Toast.makeText(this, "+100 = " + String.valueOf(h), Toast.LENGTH_SHORT).show();
-        editor.commit();
-    }
-
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    public void onBackPressed() {
+        this.moveTaskToBack(true);  // on false, it shows moveTaskToBack: 11
+        return;
     }
 
     @Override

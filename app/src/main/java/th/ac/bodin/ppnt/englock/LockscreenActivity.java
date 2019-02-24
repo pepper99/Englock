@@ -130,22 +130,31 @@ public class LockscreenActivity extends Activity {
 
         //check whether question is eng or thai and pull vocabs from the database
         if(isQuestionEng) {
-            ques = mCursor.getString(mCursor.getColumnIndex("en"));
+            String tempo;
+            tempo = mCursor.getString(mCursor.getColumnIndex("en"));
+            ques = tempo + " ("
+                    + mCursor.getString(mCursor.getColumnIndex("pop")) + ")";
             choices[0] = mCursor.getString(mCursor.getColumnIndex("th"));
             for(i=1; i<4; i++) {
                 mCursor.moveToPosition(getWords[i]);
-                choices[i] = mCursor.getString(mCursor.getColumnIndex("th"));
+                String btntxt = mCursor.getString(mCursor.getColumnIndex("th"));
+                choices[i] = btntxt;
             }
-            saveDash(ques, choices[0], pop);
+            saveDash(tempo, choices[0], pop);
         }
         else {
+            String tempo;
+            tempo = mCursor.getString(mCursor.getColumnIndex("en"));
             ques = mCursor.getString(mCursor.getColumnIndex("th"));
-            choices[0] = mCursor.getString(mCursor.getColumnIndex("en"));
+            choices[0] = tempo + " ("
+                    + mCursor.getString(mCursor.getColumnIndex("pop")) + ")";
             for(i=1; i<4; i++) {
                 mCursor.moveToPosition(getWords[i]);
-                choices[i] = mCursor.getString(mCursor.getColumnIndex("en"));
+                String btntxt = mCursor.getString(mCursor.getColumnIndex("en")) + " "
+                        + mCursor.getString(mCursor.getColumnIndex("pop")) + ")";
+                choices[i] = btntxt;
             }
-            saveDash(choices[0], ques, pop);
+            saveDash(tempo, ques, pop);
         }
 
         this.quesword = ques;

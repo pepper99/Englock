@@ -68,11 +68,13 @@
     <string name="settingarray1">Settings</string>
     <string name="settingarray2">Help</string>
     <string name="settingarray3">About us</string>
+    <string name="settingarray4">Disclaimer</string>
 
     <string-array name="settingarray">
         <item>@string/settingarray1</item>
         <item>@string/settingarray2</item>
         <item>@string/settingarray3</item>
+        <item>@string/settingarray4</item>
     </string-array>
 
     <string name="startLockscreen">Touch anywhere to start.</string>
@@ -98,7 +100,7 @@
     <string name="slide_3_desc2">And we also keep records of your recently seen words, so you won\'t be missed in case you want to review them.</string>
 
     <string name="slide_4_title">Shop</string>
-    <string name="slide_4_desc">Here is where you put your coins to use.\nGet your new and even more exciting vocabulary categories to improve your skills even further!</string>
+    <string name="slide_4_desc">Here is where you spend your coins.\nGet your new and gomore exciting vocabulary categories to improve your skills even further!</string>
     <string name="slide_4_desc1" translatable="false">The more,\n\t\t\t\t\t\t\tthe better!</string>
 
     <string name="slide_5_title">More</string>
@@ -109,5 +111,7 @@
     <string name="slide_6_desc1">(You can watch this again in Help of More section)</string>
 
     <string name="welcomescreen"> Welcome to Home Screen</string>
+
+    <string name="disclaimer_txt">  This software is a work developed by Poptum Charoennaew, Nattapat Panchavinin and Punyavud Tomeboon from Bodindecha (Sing Singhaseni) under the provision of Lattapol Dansakul under Learning English Vocabulary via Lock Screen Application : Englock project, which has been supported by the National Electronics and Computer Technology Center (NECTEC), in order to encourage pupils and students to learn and practice their skills in developing software. Therefore, the intellectual property of this software shall belong to the developer and the developer gives NECTEC a permission to distribute this software as an “as is ” and non-modified software for a temporary and non-exclusive use without remuneration to anyone for his or her own purpose or academic purpose, which are not commercial purposes. In this connection, NECTEC shall not be responsible to the user for taking care, maintaining, training or developing the efficiency of this software. Moreover, NECTEC shall not be liable for any error, software efficiency and damages in connection with or arising out of the use of the software.”</string>
 
 </resources>

@@ -66,6 +66,9 @@ public class More_Fragment extends ListFragment {
             case 2:
                 aus();
                 break;
+            case 3:
+                disclaimer();
+                break;
         }
     }
 
@@ -73,18 +76,30 @@ public class More_Fragment extends ListFragment {
         String desc = "Developed by\n" +
                 "\t• Poptum Charoennaew (Programmer)\n" +
                 "\t• Nattapat Panchavinin (Assistant)\n" +
+                "\t• Punyavud Tomeboon (Assistant)\n" +
                 "\t• Lattapol Dansakul (Advisor)\n" +
                 "\tM.6/14 Bodindecha (Sing Singhaseni)\n" +
                 "\n" +
                 "พัฒนาโดย\n" +
                 "\t• นายภพธรรม เจริญแนว (โปรแกรมเมอร์)\n" +
                 "\t• นายณัฐภัทร ปัญจวีณิน (ผู้ช่วย)\n" +
+                "\t• นายปุณยวุฒิ โตมีบุญ (ผู้ช่วย)\n" +
                 "\t• คุณครูลัทธพล ด่านสกุล (ครูที่ปรึกษา)\n" +
                 "\tม.6/14 โรงเรียนบดินทรเดชา (สิงห์ สิงหเสนี)";
         AboutDialog alert = new AboutDialog.Builder()
                 .setMessage(desc)
                 .setButton(R.string.ok)
                 .setLayout(R.layout.about_box)
+                .build();
+        alert.show(getActivity().getFragmentManager(), "LUL");
+    }
+
+    private void disclaimer() {
+        String desc = getString(R.string.settingarray4) + "\n\t\t\t" + getString(R.string.disclaimer_txt);
+        AboutDialog alert = new AboutDialog.Builder()
+                .setMessage(desc)
+                .setButton(R.string.ok)
+                .setLayout(R.layout.disclaimer_box)
                 .build();
         alert.show(getActivity().getFragmentManager(), "LUL");
     }

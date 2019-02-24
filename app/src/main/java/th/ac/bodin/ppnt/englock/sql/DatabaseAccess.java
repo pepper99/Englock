@@ -68,14 +68,23 @@ public class DatabaseAccess {
 
     public int getNumberOfData (int i) {
         int n = 30;
-        /*switch (i) {
+        switch (i) {
             case 0:
-                n = 30;
+                n = 15;
                 break;
             case 1:
+                n = 15;
+                break;
+            case 2:
+                n = 15;
+                break;
+            case 3:
                 n = 30;
                 break;
-        }*/
+            case 4:
+                n = 30;
+                break;
+        }
         return n;
     }
 
