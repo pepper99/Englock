@@ -36,11 +36,6 @@ android {
             signingConfig signingConfigs.config
         }
     }
-    externalNativeBuild {
-        cmake {
-            path "CMakeLists.txt"
-        }
-    }
     lintOptions {
         checkReleaseBuilds false
     }
