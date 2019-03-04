@@ -17,6 +17,10 @@
         android:label="@string/app_name"
         android:theme="@style/TestTheme">
 
+        <meta-data
+            android:name="com.google.android.backup.api_key"
+            android:value="AEdPqrEAAAAIU1SVWn3awqckirfgXdm1Z0eEG_wgE5nowm3CMw" />
+        
         <activity
             android:name=".MainActivity"
             android:label="@string/full_app_name"

@@ -71,5 +71,55 @@
         android:textColor="@color/white"
         android:textSize="30sp" />
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/exitLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="47dp"
+        android:layout_marginEnd="35dp">
+
+        <Button
+            android:id="@+id/exitButton"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="#000000"
+            android:alpha="0.4"
+            android:onClick="exitQues"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/exitIcon"
+            android:elevation="100dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_exit_to_app_white_24dp"
+            app:layout_constraintEnd_toEndOf="@+id/exitButton"
+            app:layout_constraintStart_toStartOf="@+id/exitButton"
+            app:layout_constraintTop_toTopOf="@+id/exitButton" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:elevation="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/thaisansneueregular"
+            android:text="@string/exit"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/exitButton"
+            app:layout_constraintEnd_toEndOf="@+id/exitButton"
+            app:layout_constraintStart_toStartOf="@+id/exitButton"
+            app:layout_constraintTop_toBottomOf="@+id/exitIcon" />
+
+    </android.support.constraint.ConstraintLayout>
+
 
 </RelativeLayout>

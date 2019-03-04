@@ -62,8 +62,8 @@
     <string name="quesdelay">Select Your Choice</string>
     <string name="confirmation">Confirmation</string>
     <string name="signoutgg">Do you want to delete your Google account?\n(Your records will not be deleted.)</string>
-    <string name="second">Second></string>
-    <string name="seconds">Seconds></string>
+    <string name="second">Second</string>
+    <string name="seconds">Seconds</string>
 
     <string name="settingarray1">Settings</string>
     <string name="settingarray2">Help</string>
@@ -111,6 +111,8 @@
     <string name="slide_6_desc1">(You can watch this again in Help of More section)</string>
 
     <string name="welcomescreen"> Welcome to Home Screen</string>
+
+    <string name="exit">EXIT</string>
 
     <string name="disclaimer_txt">  This software is a work developed by Poptum Charoennaew, Nattapat Panchavinin and Punyavud Tomeboon from Bodindecha (Sing Singhaseni) under the provision of Lattapol Dansakul under Learning English Vocabulary via Lock Screen Application : Englock project, which has been supported by the National Electronics and Computer Technology Center (NECTEC), in order to encourage pupils and students to learn and practice their skills in developing software. Therefore, the intellectual property of this software shall belong to the developer and the developer gives NECTEC a permission to distribute this software as an “as is ” and non-modified software for a temporary and non-exclusive use without remuneration to anyone for his or her own purpose or academic purpose, which are not commercial purposes. In this connection, NECTEC shall not be responsible to the user for taking care, maintaining, training or developing the efficiency of this software. Moreover, NECTEC shall not be liable for any error, software efficiency and damages in connection with or arising out of the use of the software.”</string>
 

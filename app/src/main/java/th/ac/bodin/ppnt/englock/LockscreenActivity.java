@@ -48,7 +48,7 @@ public class LockscreenActivity extends Activity {
     Random rand = new Random();
     public boolean crct = false;
     Button[] clickAns = new Button[4];
-    TextView txvw;
+    TextView quesTXT;
     WallpaperManager wallpaperManager;
     Drawable wallpaperDrawable;
     ImageView wallpp;
@@ -57,8 +57,7 @@ public class LockscreenActivity extends Activity {
     int remainingTime;
     int missCount;
 
-    private String quesword, answord;
-    private boolean isQuestionEng;
+    private String thword, enword, pop;
 
     IconRoundCornerProgressBar pbTimer;
 
@@ -70,6 +69,36 @@ public class LockscreenActivity extends Activity {
 
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
 
+        Log.d("kuy", "kuy");
+
+        setContentView(R.layout.activity_lockscreen);
+
+        clickAns[0] = (Button)findViewById(R.id.choiceA);
+        clickAns[1] = (Button)findViewById(R.id.choiceB);
+        clickAns[2] = (Button)findViewById(R.id.choiceC);
+        clickAns[3] = (Button)findViewById(R.id.choiceD);
+
+        pbTimer = (IconRoundCornerProgressBar) findViewById(R.id.progressR);
+
+        int CountDownAmnt = 10;
+        pbTimer.setMax(CountDownAmnt);
+        //pbTimer.setProgress(CountDownAmnt);
+
+        wallpaperManager = WallpaperManager.getInstance(this);
+        wallpaperDrawable = wallpaperManager.getDrawable();
+
+        /*mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);*/
+
+        wallpp = (ImageView)findViewById(R.id.wallpp);
+        wallpp.setImageDrawable(wallpaperDrawable);
+
+        Bitmap blurredBitmap = GaussianBlur.with(this).render(wallpaperDrawable);
+        wallpp.setImageBitmap(blurredBitmap);
+
+        quesTXT = (TextView)findViewById(R.id.question_txtview);
+
         missCount = 0;
 
         //MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
@@ -78,29 +107,13 @@ public class LockscreenActivity extends Activity {
 
         //homeKeyLocker.lock(this); //lock keys
 
-        final boolean isQuestionEng = rand.nextBoolean();
-        this.isQuestionEng = isQuestionEng;
-
         String pop;
-        int i, x, randomTemp;
+        final boolean isQuestionEng = rand.nextBoolean();
+        int i, randomTemp;
         final int ans;
         ans = rand.nextInt(4);//random correct choice
-        x = ans;
-        boolean[] chk = new boolean[4];
-        for(i = 0; i < 4; i++) chk[i] = false;
-        int[] ButtonNoSet = new int[4];
-        ButtonNoSet[0] = ans;
-        chk[ans] = true;
-
-        for(i = 1; i < 4; i++){
-            while(chk[x]) x = rand.nextInt(4);
-            chk[x] = true;
-            ButtonNoSet[i] = x;
-        }
 
         crct = false;
-
-        String[] choices = new String[4];
         String ques;
 
         //read the user's selected vocab set
@@ -118,83 +131,47 @@ public class LockscreenActivity extends Activity {
         for(i = 0; i < 4; i++) getWords[i] = -1;
 
         //random positions of words
+        String btntxt;
         randomTemp = -1;
         for(i = 0; i < 4; i++) {
             while(randomTemp == getWords[0] || randomTemp == getWords[1]
                     || randomTemp == getWords[2] || randomTemp == getWords[3]) randomTemp = rand.nextInt(datanum);
             getWords[i] = randomTemp;
-        }
-
-        mCursor.moveToPosition(getWords[0]);
-        pop = mCursor.getString(mCursor.getColumnIndex("pop"));
-
-        //check whether question is eng or thai and pull vocabs from the database
-        if(isQuestionEng) {
-            String tempo;
-            tempo = mCursor.getString(mCursor.getColumnIndex("en"));
-            ques = tempo + " ("
-                    + mCursor.getString(mCursor.getColumnIndex("pop")) + ")";
-            choices[0] = mCursor.getString(mCursor.getColumnIndex("th"));
-            for(i=1; i<4; i++) {
-                mCursor.moveToPosition(getWords[i]);
-                String btntxt = mCursor.getString(mCursor.getColumnIndex("th"));
-                choices[i] = btntxt;
+            mCursor.moveToPosition(getWords[i]);
+            if(isQuestionEng) {
+                if(ans == i){
+                    pop = mCursor.getString(mCursor.getColumnIndex("pop"));
+                    ques = mCursor.getString(mCursor.getColumnIndex("en"));
+                    quesTXT.setText( "\"" + ques + " (" + pop + ")\"\n" + getResources().getString(R.string.question_vocab) );
+                    btntxt = mCursor.getString(mCursor.getColumnIndex("th"));
+                    this.thword = btntxt;
+                    this.pop = pop;
+                    this.enword = ques;
+                }
+                else btntxt = mCursor.getString(mCursor.getColumnIndex("th"));
+                clickAns[i].setText(btntxt);
             }
-            saveDash(tempo, choices[0], pop);
-        }
-        else {
-            String tempo;
-            tempo = mCursor.getString(mCursor.getColumnIndex("en"));
-            ques = mCursor.getString(mCursor.getColumnIndex("th"));
-            choices[0] = tempo + " ("
-                    + mCursor.getString(mCursor.getColumnIndex("pop")) + ")";
-            for(i=1; i<4; i++) {
-                mCursor.moveToPosition(getWords[i]);
-                String btntxt = mCursor.getString(mCursor.getColumnIndex("en")) + " "
+            else {
+                if(ans == i){
+                    pop = mCursor.getString(mCursor.getColumnIndex("pop"));
+                    ques = mCursor.getString(mCursor.getColumnIndex("th"));
+                    String en = mCursor.getString(mCursor.getColumnIndex("en"));
+                    quesTXT.setText( "\"" + ques + "\"\n" + getResources().getString(R.string.question_vocab) );
+                    btntxt = en + " (" + pop + ")";
+                    this.thword = ques;
+                    this.pop = pop;
+                    this.enword = en;
+                }
+                else btntxt = mCursor.getString(mCursor.getColumnIndex("en")) + " ("
                         + mCursor.getString(mCursor.getColumnIndex("pop")) + ")";
-                choices[i] = btntxt;
+                clickAns[i].setText(btntxt);
             }
-            saveDash(tempo, ques, pop);
         }
-
-        this.quesword = ques;
-        this.answord = choices[0];
 
         mCursor.close();
         db.close();
 
-        setContentView(R.layout.activity_lockscreen);
-
-        int CountDownAmnt = 10;
-
-        pbTimer = (IconRoundCornerProgressBar) findViewById(R.id.progressR);
-        pbTimer.setMax(CountDownAmnt);
-        //pbTimer.setProgress(CountDownAmnt);
-
-        wallpaperManager = WallpaperManager.getInstance(this);
-        wallpaperDrawable = wallpaperManager.getDrawable();
-
-        /*mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);*/
-
-        wallpp = (ImageView)findViewById(R.id.wallpp);
-        wallpp.setImageDrawable(wallpaperDrawable);
-
-        Bitmap blurredBitmap = GaussianBlur.with(this).render(wallpaperDrawable);
-        wallpp.setImageBitmap(blurredBitmap);
-
-        clickAns[0] = (Button)findViewById(R.id.choiceA);
-        clickAns[1] = (Button)findViewById(R.id.choiceB);
-        clickAns[2] = (Button)findViewById(R.id.choiceC);
-        clickAns[3] = (Button)findViewById(R.id.choiceD);
-        //clickLock = (Button)findViewById(R.id.unlockbutton);
-
-        txvw = (TextView)findViewById(R.id.question_txtview);
-        txvw.setText( "\"" + ques + "\"\n" + getResources().getString(R.string.question_vocab) );
-
         //countdown
-
         cdt = new CountDownTimer((CountDownAmnt) * 1000, 1000) {
             public void onTick(long millisUntilFinished) {
                 if(crct == false){
@@ -211,8 +188,6 @@ public class LockscreenActivity extends Activity {
                 TimeoutAlert();
             }
         }.start();
-
-        for(i = 0; i < 4; i++) clickAns[ButtonNoSet[i]].setText(choices[i]);
 
         clickAns[0].setOnClickListener(new View.OnClickListener() {
             @Override
@@ -273,41 +248,37 @@ public class LockscreenActivity extends Activity {
     void clickAns(View view, int choices, int ans) {
         if(crct == false){
             if(ans == choices) {
+                long newPts = scoreCal(remainingTime, missCount);
                 crct = true;
 
-                SharedPreferences shared = getSharedPreferences("Englock Points", Context.MODE_PRIVATE);
+                if (newPts > 0) {
 
-                long score = scoreCal(remainingTime, missCount);
-                long temp = shared.getLong("pointsCount", -1);
-                if(temp != -1 && score >= 0){
+                    SharedPreferences shared = getSharedPreferences("Englock Points", Context.MODE_PRIVATE);
+                    long currentPts = shared.getLong("pointsCount", -1);
+                    if(currentPts == -1) currentPts = 0;
                     SharedPreferences.Editor editor = shared.edit();
-                    editor.putLong("pointsCount", temp + score );
+                    editor.putLong("pointsCount", currentPts + newPts );
                     editor.commit();
-                }
 
-                if (missCount < 2) {
-                    int t;
-                    Log.d(TAG, "miss " + missCount);
                     shared = getSharedPreferences("Englock Database", Context.MODE_PRIVATE);
-                    t = shared.getInt("correct" + String.valueOf(missCount), 0);
-                    SharedPreferences.Editor editor = shared.edit();
+                    int t = shared.getInt("correct" + String.valueOf(missCount), 0);
+                    editor = shared.edit();
                     editor.putInt("correct0", t + 1);
-
                     editor.commit();
-
                 }
 
-                for(int i = 0; i < 4; i++) clickAns[i].setEnabled(false);
-
-                clickAns[choices].setEnabled(true);
-                clickAns[choices].setClickable(false);
-                clickAns[choices].setBackgroundColor(0xCCFFD3);
+                for(int i = 0; i < 4; i++){
+                    if(i == choices) {
+                        clickAns[choices].setClickable(false);
+                        clickAns[choices].setBackgroundColor(0xCCFFD3);
+                    }
+                    else clickAns[i].setEnabled(false);
+                }
 
                 cdt.cancel();
+                saveDash(enword,thword,pop);
 
-                String AlertTxt;
-                if(isQuestionEng) AlertTxt = getResources().getString(R.string.niceone) + "\n" + quesword + " : " + answord;
-                else AlertTxt = getResources().getString(R.string.niceone) + "\n" + answord + " : " + quesword;
+                String AlertTxt = getResources().getString(R.string.niceone) + "\n" + enword + " : " + thword;
                 ViewDialog alert = new ViewDialog.Builder()
                         .setMessage(AlertTxt)
                         .setButton(R.string.ok)
@@ -343,10 +314,9 @@ public class LockscreenActivity extends Activity {
     }*/
 
     private long scoreCal(int rTime, int missCtn) {
-        long Score = 0;
-        if(missCtn >= 3) return 0;
+        if(missCtn > 2) return 0;
         else {
-            Score = rTime / (missCtn + 1);
+            long Score = 2*rTime / (missCtn + 1);
             Log.d(TAG, "scoreCal: " + rTime + " " + missCtn + " " + Score);
             return Score;
         }
@@ -370,9 +340,8 @@ public class LockscreenActivity extends Activity {
     }
 
     private void TimeoutAlert() {
-        String AlertTxt;
-        if(isQuestionEng) AlertTxt = quesword + " : " + answord + "\n";
-        else AlertTxt = answord + " : " + quesword + "\n" + getResources().getString(R.string.toobad);
+        saveDash(enword,thword,pop);
+        String AlertTxt = enword + " : " + thword + "\n" + getResources().getString(R.string.toobad);
         ViewDialog alert = new ViewDialog.Builder()
                 .setMessage(AlertTxt)
                 .setButton(R.string.ok)
