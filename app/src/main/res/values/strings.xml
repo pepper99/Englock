@@ -33,6 +33,7 @@
 
     //Home
     <string name="welcome">Welcome,</string>
+    <string name="statsFromCloud">Do you want to retrieve your data from the cloud or not? (If not, your cloud data will be replaced with your local data.)</string>
 
     //Dashboard
     <string name="correctness">Correctness</string>
@@ -41,11 +42,11 @@
     <string name="statswheelunset">(First choice/Seen : 0/0)</string>
 
     //Shop
-    <string name="product1">School</string>
-    <string name="product2">Clothes</string>
-    <string name="product3">Emotions</string>
-    <string name="product4">Etiquette</string>
-    <string name="product5">Landforms</string>
+    <string name="shopItem0">School</string>
+    <string name="shopItem1">Clothes</string>
+    <string name="shopItem2">Emotions</string>
+    <string name="shopItem3">Etiquette</string>
+    <string name="shopItem4">Landforms</string>
     <string name="buyquestion1">Are you sure you want to buy</string>
     <string name="buyquestion2">\" vocabulary category for</string>
     <string name="buyquestion3">coins?</string>

@@ -1,6 +1,5 @@
 package th.ac.bodin.ppnt.englock.utils;
 
-import android.app.IntentService;
 import android.app.KeyguardManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -13,7 +12,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
-import android.widget.CompoundButton;
 
 import th.ac.bodin.ppnt.englock.MainActivity;
 import th.ac.bodin.ppnt.englock.R;
@@ -23,10 +21,6 @@ public class LockscreenService extends Service {
     BroadcastReceiver receiver;
     IntentFilter filter;
     NotificationManager notificationManager;
-
-    public static final String ACTION_1 = "action_1";
-
-    String toggletxt;
     SharedPreferences shared;
 
     @Override
@@ -103,7 +97,7 @@ public class LockscreenService extends Service {
             // Register the channel with the system
             notificationManager.createNotificationChannel(channel);
         }
-        shared = getSharedPreferences("Englock Settings", Context.MODE_PRIVATE);
+        shared = getSharedPreferences("settings", Context.MODE_PRIVATE);
         Boolean isOn = shared.getBoolean("isOn",true);
 
         NotificationCompat.Builder notification =

@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import th.ac.bodin.ppnt.englock.R;
 import th.ac.bodin.ppnt.englock.MainActivity;
+import th.ac.bodin.ppnt.englock.stats.FirebaseHelper;
 
 public class ShopDialog extends DialogFragment {
 
@@ -278,30 +279,34 @@ public class ShopDialog extends DialogFragment {
                 .getAttributes().windowAnimations = R.style.DialogTheme;
     }
 
-    private int confirmPurchase( int position) {
-
+    private int confirmPurchase(int position) {
         long price = this.price;
 
-        SharedPreferences shared = getActivity().getSharedPreferences("Englock Points", Context.MODE_PRIVATE);
-        long current = shared.getLong("pointsCount", -1);
+        SharedPreferences shared = getActivity().getSharedPreferences("userStats", Context.MODE_PRIVATE);
+        long current = shared.getLong("points", -1);
 
         if( current >= price ) {
 
-            shared = getActivity().getSharedPreferences("Englock Shop Stats", Context.MODE_PRIVATE);
-            Boolean test = shared.getBoolean("product" + String.valueOf(position), false);
+            shared = getActivity().getSharedPreferences("shopStats", Context.MODE_PRIVATE);
+            Boolean test = shared.getBoolean("shopItem" + String.valueOf(position), false);
             if( test ) return 0;
 
             SharedPreferences.Editor editor = shared.edit();
-            editor.putBoolean("product" + String.valueOf(position), true);
+            editor.putBoolean("shopItem" + String.valueOf(position), true);
             editor.commit();
 
-            test = shared.getBoolean("product" + String.valueOf(position), false);
+            test = shared.getBoolean("shopItem" + String.valueOf(position), false);
 
             if( test ) {
-                shared = getActivity().getSharedPreferences("Englock Points", Context.MODE_PRIVATE);
+                shared = getActivity().getSharedPreferences("userStats", Context.MODE_PRIVATE);
                 editor = shared.edit();
-                editor.putLong("pointsCount", current - price);
+                editor.putLong("points", current - price);
                 editor.commit();
+
+                FirebaseHelper firebaseHelper = new FirebaseHelper(getActivity());
+                firebaseHelper.updateToCloud("points", 0, current - price);
+                firebaseHelper.updateToCloud("shopItem" + String.valueOf(position), 1, true);
+
                 return 3;
             }
             else return 1;

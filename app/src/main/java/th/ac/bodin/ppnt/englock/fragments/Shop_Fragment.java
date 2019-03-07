@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.TextViewCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ import th.ac.bodin.ppnt.englock.extra_assets.CustomAdapter;
 import th.ac.bodin.ppnt.englock.extra_assets.Product;
 import th.ac.bodin.ppnt.englock.extra_assets.ShopDialog;
 import th.ac.bodin.ppnt.englock.extra_assets.ViewDialog;
+import th.ac.bodin.ppnt.englock.stats.FirebaseHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,7 +46,7 @@ public class Shop_Fragment extends Fragment {
     TextView mTextMessage;
     boolean[] productStatus;
 
-    int n = 10;
+    int n = 5;
 
     public static Shop_Fragment newInstance() {
         return new Shop_Fragment();
@@ -66,7 +68,7 @@ public class Shop_Fragment extends Fragment {
             TextViewCompat.setAutoSizeTextTypeWithDefaults(coin, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
         }
 
-        SharedPreferences shared = getActivity().getSharedPreferences("Englock Points", Context.MODE_PRIVATE);
+        SharedPreferences shared = getActivity().getSharedPreferences("userStats", Context.MODE_PRIVATE);
         boolean isPTsaved = shared.getBoolean("isPTsaved", false);
 
         if(isPTsaved) updatePoints(shared);
@@ -95,11 +97,11 @@ public class Shop_Fragment extends Fragment {
         boolean[] selecter = checkSelect();
         
         productList = new ArrayList<>();
-        productList.add(new Product(R.drawable.db_school_small, getResources().getString(R.string.product1), "Default", 200, checker[0], selecter[0]));
-        productList.add(new Product(R.drawable.db_clothes_small, getResources().getString(R.string.product2), "400", 400, checker[1], selecter[1]));
-        productList.add(new Product(R.drawable.db_emotions_small, getResources().getString(R.string.product3), "800", 800, checker[2], selecter[2]));
-        productList.add(new Product(R.drawable.db_etiquette_small, getResources().getString(R.string.product4), "1500", 1500, checker[3], selecter[3]));
-        productList.add(new Product(R.drawable.db_landforms_small, getResources().getString(R.string.product5), "2000", 2000, checker[4], selecter[4]));
+        productList.add(new Product(R.drawable.db_school_small, getResources().getString(R.string.shopItem0), "Default", 200, checker[0], selecter[0]));
+        productList.add(new Product(R.drawable.db_clothes_small, getResources().getString(R.string.shopItem1), "200", 200, checker[1], selecter[1]));
+        productList.add(new Product(R.drawable.db_emotions_small, getResources().getString(R.string.shopItem2), "200", 200, checker[2], selecter[2]));
+        productList.add(new Product(R.drawable.db_etiquette_small, getResources().getString(R.string.shopItem3), "1500", 1500, checker[3], selecter[3]));
+        productList.add(new Product(R.drawable.db_landforms_small, getResources().getString(R.string.shopItem4), "2000", 2000, checker[4], selecter[4]));
         
         return productList;
     }
@@ -107,10 +109,11 @@ public class Shop_Fragment extends Fragment {
     private boolean[] checkProduct() {
         boolean[] checker = new boolean[n];
 
-        SharedPreferences shoppee = getActivity().getSharedPreferences("Englock Shop Stats", Context.MODE_PRIVATE);
+        SharedPreferences shoppee = getActivity().getSharedPreferences("shopStats", Context.MODE_PRIVATE);
 
         for (int i = 0; i < n; i++){
-            checker[i] = shoppee.getBoolean("product" + String.valueOf(i), false);
+            checker[i] = shoppee.getBoolean("shopItem" + String.valueOf(i), false);
+            Log.d("kuy",String.valueOf(i) + " " + String.valueOf(checker[i]));
         }
 
         checker[0] = true;
@@ -120,7 +123,7 @@ public class Shop_Fragment extends Fragment {
     private boolean[] checkSelect() {
         boolean[] checker = new boolean[n];
 
-        SharedPreferences shoppee = getActivity().getSharedPreferences("Englock Shop Stats", Context.MODE_PRIVATE);
+        SharedPreferences shoppee = getActivity().getSharedPreferences("shopStats", Context.MODE_PRIVATE);
 
         int selected = shoppee.getInt("selected", 0);
 
@@ -138,12 +141,14 @@ public class Shop_Fragment extends Fragment {
 
             if(productList.get(position).isBought()) {
 
-                SharedPreferences shoppee = getActivity().getSharedPreferences("Englock Shop Stats", Context.MODE_PRIVATE);
+                SharedPreferences shoppee = getActivity().getSharedPreferences("shopStats", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = shoppee.edit();
                 editor.putInt("selected", position);
-                editor.commit();
+                editor.apply();
 
                 String txt = productList.get(position).getTitle() + " is now selected.";
+                FirebaseHelper firebaseHelper = new FirebaseHelper(getActivity());
+                firebaseHelper.updateToCloud("selected",1, position);
 
                 Toast.makeText(getActivity(), txt, Toast.LENGTH_SHORT).show();
                 apply();
@@ -178,7 +183,7 @@ public class Shop_Fragment extends Fragment {
     @Override
     public void onResume() {
 
-        SharedPreferences points = getActivity().getSharedPreferences("Englock Points", Context.MODE_PRIVATE);
+        SharedPreferences points = getActivity().getSharedPreferences("userStats", Context.MODE_PRIVATE);
         updatePoints(points);
 
         apply();
@@ -201,10 +206,10 @@ public class Shop_Fragment extends Fragment {
 
     //points thingyszzzzzz
     private void createPoints(){
-        SharedPreferences points = getActivity().getSharedPreferences("Englock Points", Context.MODE_PRIVATE);
+        SharedPreferences points = getActivity().getSharedPreferences("userStats", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = points.edit();
 
-        editor.putLong("pointsCount", 0);
+        editor.putLong("points", 0);
         editor.putBoolean("isPTsaved", true);
         editor.commit();
 
@@ -213,7 +218,7 @@ public class Shop_Fragment extends Fragment {
 
     private void updatePoints(SharedPreferences points){
 
-        long pts = points.getLong("pointsCount", -1);
+        long pts = points.getLong("points", -1);
 
         mTextMessage = (TextView)getView().findViewById(R.id.ptnShop);
         if(pts != -1) mTextMessage.setText(String.valueOf(pts));

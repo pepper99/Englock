@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,13 +22,15 @@ import android.widget.TextView;
 import com.vansuita.gaussianblur.GaussianBlur;
 
 public class LockscreenBeforeActivity extends Activity{
-    TextView cntdownTxt;
-    TextView unlockTXT;
-    ImageView wallpp;
-    WallpaperManager wallpaperManager;
-    Drawable wallpaperDrawable;
-    ProgressBar pBar;
-    ImageView keyImage;
+    private TextView cntdownTxt;
+    private TextView unlockTXT;
+    private ImageView wallpp;
+    private ConstraintLayout exitLayout;
+    private WallpaperManager wallpaperManager;
+    private Drawable wallpaperDrawable;
+    private ProgressBar pBar;
+    private ImageView keyImage;
+    private Boolean isTouched;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +42,15 @@ public class LockscreenBeforeActivity extends Activity{
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startClick(v);
+                if (isTouched);
+                else {
+                    isTouched = true;
+                    startClick(v);
+                }
             }
         });
 
+        isTouched = false;
         wallpaperManager = WallpaperManager.getInstance(this);
         wallpaperDrawable = wallpaperManager.getDrawable();
 
@@ -58,6 +66,7 @@ public class LockscreenBeforeActivity extends Activity{
         keyImage = (ImageView)findViewById(R.id.keyImage);
         unlockTXT = (TextView)findViewById(R.id.unlockLabel);
 
+        exitLayout = (ConstraintLayout) findViewById(R.id.exitLayout);
     }
 
     @Override
@@ -65,12 +74,18 @@ public class LockscreenBeforeActivity extends Activity{
         return; //Do nothing!
     }
 
+    public void exitQues(View view) {
+        overridePendingTransition(R.anim.mainfadein, R.anim.mainfadeout);
+        finish();
+    }
+
     public void startClick(View view) {
 
         keyImage.setVisibility(View.INVISIBLE);
         unlockTXT.setVisibility(View.INVISIBLE);
+        exitLayout.setVisibility(View.GONE);
 
-        SharedPreferences shared = getSharedPreferences("Englock Settings", Context.MODE_PRIVATE);
+        SharedPreferences shared = getSharedPreferences("settings", Context.MODE_PRIVATE);
         int delay = shared.getInt("delay",0);
         Log.d("delay",String.valueOf(delay));
 

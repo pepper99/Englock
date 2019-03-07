@@ -22,13 +22,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.vansuita.gaussianblur.GaussianBlur;
 
 import java.util.Random;
 
 import th.ac.bodin.ppnt.englock.extra_assets.ViewDialog;
-import th.ac.bodin.ppnt.englock.sql.DatabaseAccess;
 import th.ac.bodin.ppnt.englock.sql.DatabaseOpenHelper;
+import th.ac.bodin.ppnt.englock.stats.FirebaseHelper;
 
 /*import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -41,7 +43,6 @@ public class LockscreenActivity extends Activity {
     //private AdView mAdView;
 
     //public HomeKeyLocker homeKeyLocker = new HomeKeyLocker();
-    //Context context;
 
     Cursor mCursor;
 
@@ -53,6 +54,7 @@ public class LockscreenActivity extends Activity {
     Drawable wallpaperDrawable;
     ImageView wallpp;
     Vibrator v;
+    FirebaseHelper firebaseHelper;
 
     int remainingTime;
     int missCount;
@@ -117,7 +119,7 @@ public class LockscreenActivity extends Activity {
         String ques;
 
         //read the user's selected vocab set
-        SharedPreferences settings = getSharedPreferences("Englock Shop Stats", Context.MODE_PRIVATE);
+        SharedPreferences settings = getSharedPreferences("shopStats", Context.MODE_PRIVATE);
         int VocabSelection = settings.getInt("selected", 0);
 
         Log.d("kuy", String.valueOf(VocabSelection));
@@ -130,8 +132,7 @@ public class LockscreenActivity extends Activity {
         int[] getWords = new int[4];
         for(i = 0; i < 4; i++) getWords[i] = -1;
 
-        //random positions of words
-        String btntxt;
+                String btntxt;
         randomTemp = -1;
         for(i = 0; i < 4; i++) {
             while(randomTemp == getWords[0] || randomTemp == getWords[1]
@@ -213,12 +214,6 @@ public class LockscreenActivity extends Activity {
                 clickAns(view, 3, ans);
             }
         });
-        /*clickLock.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                unlockScreen(view);
-            }
-        });*/
     }
 
     /**
@@ -246,25 +241,26 @@ public class LockscreenActivity extends Activity {
     }
 
     void clickAns(View view, int choices, int ans) {
-        if(crct == false){
+        if(!crct){
             if(ans == choices) {
                 long newPts = scoreCal(remainingTime, missCount);
                 crct = true;
 
+                this.firebaseHelper = new FirebaseHelper(this);
+
                 if (newPts > 0) {
+                    SharedPreferences shared = getSharedPreferences("userStats", Context.MODE_PRIVATE);
+                    long currentPts = shared.getLong("points", 0);
 
-                    SharedPreferences shared = getSharedPreferences("Englock Points", Context.MODE_PRIVATE);
-                    long currentPts = shared.getLong("pointsCount", -1);
-                    if(currentPts == -1) currentPts = 0;
                     SharedPreferences.Editor editor = shared.edit();
-                    editor.putLong("pointsCount", currentPts + newPts );
-                    editor.commit();
-
-                    shared = getSharedPreferences("Englock Database", Context.MODE_PRIVATE);
-                    int t = shared.getInt("correct" + String.valueOf(missCount), 0);
-                    editor = shared.edit();
-                    editor.putInt("correct0", t + 1);
-                    editor.commit();
+                    editor.putLong("points", currentPts + newPts );
+                    if(missCount == 0) {
+                        long correct = shared.getLong("quesCorrect", 0);
+                        editor.putLong("quesCorrect", correct+1);
+                        firebaseHelper.updateToCloud("quesCorrect", 0, correct+1);
+                    }
+                    editor.apply();
+                    firebaseHelper.updateToCloud("points", 0, currentPts + newPts);
                 }
 
                 for(int i = 0; i < 4; i++){
@@ -301,17 +297,6 @@ public class LockscreenActivity extends Activity {
             }
         }
     }
-    /*public void unlockScreen(View view) {
-        //Instead of using finish(), this totally destroys the process
-        if (crct == true){
-            //homeKeyLocker.unlock();
-            //android.os.Process.killProcess(android.os.Process.myPid());
-            overridePendingTransition(R.layout.mainfadein,
-                    R.layout.mainfadeout);
-            finish();
-        }
-        else return;
-    }*/
 
     private long scoreCal(int rTime, int missCtn) {
         if(missCtn > 2) return 0;
@@ -323,20 +308,25 @@ public class LockscreenActivity extends Activity {
     }
 
     private void saveDash(String EN, String TH, String POP) {
-        SharedPreferences shared = getSharedPreferences("Englock Database", Context.MODE_PRIVATE);
+        SharedPreferences shared = getSharedPreferences("userStats", Context.MODE_PRIVATE);
         String[] temp = new String[3];
-        int count = shared.getInt("count", 0);
+        long found = shared.getLong("quesFound", 0);
         temp[0] = EN + " (" + POP + ") : " + TH;
-        temp[1] = shared.getString("Recent0", "null");
-        temp[2] = shared.getString("Recent1", "null");
+        temp[1] = shared.getString("recent0", "-");
+        temp[2] = shared.getString("recent1", "-");
 
         SharedPreferences.Editor editor = shared.edit();
 
-        editor.putInt("count", count+1);
-        editor.putString("Recent0", temp[0]);
-        editor.putString("Recent1", temp[1]);
-        editor.putString("Recent2", temp[2]);
-        editor.commit();
+        editor.putLong("quesFound", found+1);
+        editor.putString("recent0", temp[0]);
+        editor.putString("recent1", temp[1]);
+        editor.putString("recent2", temp[2]);
+        editor.apply();
+
+        firebaseHelper.updateToCloud("quesFound", 0, found+1);
+        firebaseHelper.updateToCloud("recent0", 0, temp[0]);
+        firebaseHelper.updateToCloud("recent1", 0, temp[1]);
+        firebaseHelper.updateToCloud("recent2", 0, temp[2]);
     }
 
     private void TimeoutAlert() {

@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
@@ -16,6 +17,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Toast;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.Locale;
 
@@ -27,6 +35,7 @@ public class SettingsPop extends AppCompatActivity {
     Button timerbutton, revokebutton, changelangbutton, haxbtn;
     AlertDialog alertDialog1;
     String lang;
+    GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +49,7 @@ public class SettingsPop extends AppCompatActivity {
 
         lockscreenToggle = (SwitchCompat) findViewById(R.id.togglelock);
         lockscreenToggle.setOnCheckedChangeListener (null);
-        shared = getSharedPreferences("Englock Settings", Context.MODE_PRIVATE);
+        shared = getSharedPreferences("settings", Context.MODE_PRIVATE);
         Boolean isOn = shared.getBoolean("isOn",true);
         lockscreenToggle.setChecked(isOn);
 
@@ -90,9 +99,8 @@ public class SettingsPop extends AppCompatActivity {
     }
 
     private void revokeAccount() {
-        shared = getSharedPreferences("Englock Account", Context.MODE_PRIVATE);
-        boolean isACsaved = shared.getBoolean("IsACsaved", false);
-        if (isACsaved) {
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        if (acct != null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
             String title = getResources().getString(R.string.confirmation);
@@ -108,7 +116,7 @@ public class SettingsPop extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     switch(which){
                         case DialogInterface.BUTTON_POSITIVE:
-                            clearAccount(shared);
+                            clearAccount();
                             Toast.makeText(SettingsPop.this, "Your Google account has been deleted.", Toast.LENGTH_SHORT).show();
                             break;
 
@@ -126,10 +134,26 @@ public class SettingsPop extends AppCompatActivity {
         else Toast.makeText(this, "You are not signed in.", Toast.LENGTH_LONG).show();
     }
 
-    private void clearAccount(SharedPreferences shared) {
-        SharedPreferences.Editor editor = shared.edit();
-        editor.clear();
-        editor.commit();
+    private void clearAccount() {
+        initInstance();
+        mGoogleSignInClient.revokeAccess().addOnCompleteListener(this, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                SharedPreferences sharedPreferences = getSharedPreferences("userStats", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.apply();
+                sharedPreferences = getSharedPreferences("shopStats", Context.MODE_PRIVATE);
+                editor = sharedPreferences.edit();
+                editor.clear();
+                editor.apply();
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     private void lockscreenTimer() {
@@ -142,7 +166,7 @@ public class SettingsPop extends AppCompatActivity {
 
         CharSequence[] timechoices = {"0 " + sec, "3 " + secs, "5 " + secs, "10 " + secs, "20 " + secs};
 
-        shared = getSharedPreferences("Englock Settings", Context.MODE_PRIVATE);
+        shared = getSharedPreferences("settings", Context.MODE_PRIVATE);
         int delaycase = shared.getInt("delaycase",0);
         editor = shared.edit();
 
@@ -184,7 +208,7 @@ public class SettingsPop extends AppCompatActivity {
         String ques = getResources().getString(R.string.queslang);
         builder.setTitle(ques);
 
-        SharedPreferences shared = getSharedPreferences("Englock Settings", Context.MODE_PRIVATE);
+        SharedPreferences shared = getSharedPreferences("settings", Context.MODE_PRIVATE);
         int selectlang = shared.getInt("lang",0);
         editor = shared.edit();
 
@@ -193,7 +217,7 @@ public class SettingsPop extends AppCompatActivity {
 
             public void onClick(DialogInterface dialog, int item) {
                 editor.putInt("lang", item);
-                editor.commit();
+                editor.apply();
                 switch(item)
                 {
                     case 0:
@@ -210,26 +234,31 @@ public class SettingsPop extends AppCompatActivity {
                 Configuration conf = res.getConfiguration();
                 conf.locale = myLocale;
                 res.updateConfiguration(conf, dm);
-                startMain();
 
+                Intent refresh = new Intent(getApplication(), MainActivity.class);
+                refresh.putExtra("refresh", true);
+                startActivity(refresh);
+                finish();
             }
         });
         alertDialog1 = builder.create();
         alertDialog1.show();
     }
 
-    private void startMain() {
-        Intent refresh = new Intent(this, MainActivity.class);
-        startActivity(refresh);
-        finish();
-    }
-
     private void Hax() {
-        SharedPreferences shared = getSharedPreferences("Englock Points", Context.MODE_PRIVATE);
+        SharedPreferences shared = getSharedPreferences("userStats", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = shared.edit();
-        long h = shared.getLong("pointsCount", 0) + 100;
-        editor.putLong("pointsCount", h );
+        long h = shared.getLong("points", 0) + 100;
+        editor.putLong("points", h );
         Toast.makeText(this, "+100 = " + String.valueOf(h), Toast.LENGTH_SHORT).show();
         editor.commit();
+    }
+
+    private void initInstance() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 }

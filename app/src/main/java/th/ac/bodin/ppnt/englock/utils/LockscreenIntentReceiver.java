@@ -13,14 +13,14 @@ public class LockscreenIntentReceiver extends BroadcastReceiver {
         String action = intent.getAction();
 
         Boolean isOn;
-        SharedPreferences shared = context.getSharedPreferences("Englock Settings", Context.MODE_PRIVATE);
+        SharedPreferences shared = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
         isOn = shared.getBoolean("isOn", true);
 
         //If the screen was just turned on or it just booted up, start your Lock Activity
         if( (action.equals(Intent.ACTION_SCREEN_OFF) || action.equals(Intent.ACTION_BOOT_COMPLETED)) && isOn )
             {
                 Intent i = new Intent(context, LockscreenBeforeActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 context.startActivity(i);
             }
     }

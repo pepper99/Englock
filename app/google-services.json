@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "1040789569079",
+    "firebase_url": "https://englock-1524836982988.firebaseio.com",
+    "project_id": "englock-1524836982988",
+    "storage_bucket": "englock-1524836982988.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1040789569079:android:60c04af5b382b0fc",
+        "android_client_info": {
+          "package_name": "th.ac.bodin.ppnt.englock"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1040789569079-24sbsma7665h28g8q5sl5jcn1vf25fdc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "th.ac.bodin.ppnt.englock",
+            "certificate_hash": "ab09f833ae08205c83e92eb5fef09d3d73709321"
+          }
+        },
+        {
+          "client_id": "1040789569079-pr8cpqqc6gts0c4t06095vu32fkktan2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "th.ac.bodin.ppnt.englock",
+            "certificate_hash": "229f772b11a1fea7d3e7b6c10aa6a634df3a25a2"
+          }
+        },
+        {
+          "client_id": "1040789569079-511r2mqfkduah7p0qral3ck5m99edhov.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9G8s8S9w55_vLHJSAD2Z2fGl49Y2tSQk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1040789569079-511r2mqfkduah7p0qral3ck5m99edhov.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

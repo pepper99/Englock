@@ -9,6 +9,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -28,6 +30,9 @@ import th.ac.bodin.ppnt.englock.fragments.Shop_Fragment;
 import th.ac.bodin.ppnt.englock.utils.LockscreenService;
 
 public class MainActivity extends AppCompatActivity {
+
+    SharedPreferences.OnSharedPreferenceChangeListener listener;
+    SharedPreferences prefs;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -85,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Bundle bundle = getIntent().getExtras();
+
         startService(new Intent(this, LockscreenService.class));
 
         setContentView(R.layout.activity_main);
@@ -116,7 +123,37 @@ public class MainActivity extends AppCompatActivity {
             Intro();
         }
 
-        shared = getSharedPreferences("Englock Settings", Context.MODE_PRIVATE);
+        if (bundle != null) {
+            boolean refresh = bundle.getBoolean("refresh");
+            if(refresh) {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.layout_fragment_container,
+                                Home_Fragment.newInstance(),
+                                "HOME")
+                        .commit();
+            }
+        }
+
+        prefs = getSharedPreferences("userStats", Context.MODE_PRIVATE);
+        listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+                if(key == "points") {
+                    Home_Fragment myFragment = (Home_Fragment) getSupportFragmentManager().findFragmentByTag("HOME");
+                    if (myFragment != null && myFragment.isVisible()) {
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.layout_fragment_container,
+                                        Home_Fragment.newInstance(),
+                                        "HOME")
+                                .commit();
+                    }
+                }
+            }
+        };
+        prefs.registerOnSharedPreferenceChangeListener(listener);
+
+        shared = getSharedPreferences("settings", Context.MODE_PRIVATE);
         int selectlang = shared.getInt("lang",0);
         String lang = "en";
         switch(selectlang)
@@ -145,12 +182,24 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onResume() {
+        prefs.registerOnSharedPreferenceChangeListener(listener);
         super.onResume();
     }
 
     public void onBackPressed() {
-        this.moveTaskToBack(true);  // on false, it shows moveTaskToBack: 11
-        return;
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        prefs.unregisterOnSharedPreferenceChangeListener(listener);
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        prefs.unregisterOnSharedPreferenceChangeListener(listener);
+        super.onDestroy();
     }
 
     @Override

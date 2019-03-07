@@ -3,12 +3,16 @@ package th.ac.bodin.ppnt.englock.fragments;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,9 +28,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import th.ac.bodin.ppnt.englock.MainActivity;
 import th.ac.bodin.ppnt.englock.R;
+import th.ac.bodin.ppnt.englock.stats.FirebaseHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,7 +49,7 @@ public class Home_Fragment extends Fragment {
     SignInButton signInButton;
     TextView mTextMessage;
     ImageView ProfilePic, ThemePic;
-    Uri personPhoto;
+    AlertDialog alertDialog1;
 
     public static final int RC_SIGN_IN = 1010;
 
@@ -76,11 +87,9 @@ public class Home_Fragment extends Fragment {
         anim.setRepeatMode(ObjectAnimator.RESTART);
         anim.start();
 
-        SharedPreferences shared = getActivity().getSharedPreferences("Englock Account",
-                Context.MODE_PRIVATE);
-        boolean isACsaved = shared.getBoolean("IsACsaved", false);
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
 
-        shared = getActivity().getSharedPreferences("Englock Points", Context.MODE_PRIVATE);
+        SharedPreferences shared = getActivity().getSharedPreferences("userStats", Context.MODE_PRIVATE);
         boolean isPTsaved = shared.getBoolean("isPTsaved", false);
 
         signInButton = (SignInButton)getView().findViewById(R.id.sign_in_button);
@@ -92,13 +101,14 @@ public class Home_Fragment extends Fragment {
             }
         });
 
-        if(isACsaved) updateUI(GoogleSignIn.getLastSignedInAccount(this.getContext()));
+        if(acct != null) updateUI(GoogleSignIn.getLastSignedInAccount(this.getContext()));
 
         if(isPTsaved) updatePoints();
         else createPoints();
 
-        shared = getActivity().getSharedPreferences("Englock Shop Stats", Context.MODE_PRIVATE);
         ThemePic = (ImageView) getView().findViewById(R.id.ThemeImage);
+
+        shared = getActivity().getSharedPreferences("shopStats", Context.MODE_PRIVATE);
         int selected = shared.getInt("selected", -1);
         switch (selected) {
             case 0:
@@ -172,31 +182,24 @@ public class Home_Fragment extends Fragment {
     }
 
     private void updateUI(GoogleSignInAccount acct){
-
-        SharedPreferences shared = getActivity().getSharedPreferences("Englock Account", Context.MODE_PRIVATE);
-        String uri = shared.getString("Ac_UrlPic", "404");
-        Log.d(TAG, "Url: " + uri);
-        Uri uril = acct.getPhotoUrl();
-
         ProfilePic = (ImageView)getView().findViewById(R.id.ProfileImage);
-        personPhoto = Uri.parse(uri);
         Picasso.get()
-                .load(uril)
+                .load(acct.getPhotoUrl())
                 .placeholder(R.drawable.ic_account_circle_black_24dp)
                 .error(R.drawable.ic_account_circle_black_24dp)
                 .resize(220,220)
                 .centerCrop()
                 .into(ProfilePic);
 
-        String AcName = shared.getString("Ac_NAME", "Anonymous");
+        String AcName = acct.getDisplayName();
         mTextMessage = (TextView)getView().findViewById(R.id.welcomeText);
         signInButton.setVisibility(View.INVISIBLE);
         mTextMessage.setText(getResources().getString(R.string.welcome) + "\n       " + AcName);
         mTextMessage.setVisibility(View.VISIBLE);
 
-        shared = getActivity().getSharedPreferences("Englock Shop Stats", Context.MODE_PRIVATE);
+        SharedPreferences shared = getActivity().getSharedPreferences("shopStats", Context.MODE_PRIVATE);
         ThemePic = (ImageView) getView().findViewById(R.id.ThemeImage);
-        int selected = shared.getInt("selected", -1);
+        int selected = shared.getInt("selected", 0);
         switch (selected) {
             case 0:
                 ThemePic.setImageResource(R.drawable.db_school);
@@ -217,31 +220,72 @@ public class Home_Fragment extends Fragment {
     }
 
     private void saveInfo(GoogleSignInAccount acct){
-        SharedPreferences shared = getActivity().getSharedPreferences("Englock Account", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = shared.edit();
-        editor.putString("Ac_NAME", acct.getDisplayName());
-        editor.putString("Ac_UrlPic", acct.getPhotoUrl().toString());
-        editor.putBoolean("IsACsaved", true);
-        editor.commit();
-    }
+        final String id = acct.getId();
+        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("users").child(id);
+        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            FirebaseHelper firebaseHelper = new FirebaseHelper(getActivity());
 
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                    String title = getResources().getString(R.string.confirmation);
+                    String desc = getResources().getString(R.string.statsFromCloud);
+                    String yes = getResources().getString(R.string.yes);
+                    String no = getResources().getString(R.string.no);
+
+                    builder.setTitle(title);
+                    builder.setMessage(desc);
+
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch(which){
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    firebaseHelper.retrieveDatabase();
+                                    break;
+
+                                case DialogInterface.BUTTON_NEGATIVE:
+                                    firebaseHelper.createNewDatabase();
+                                    break;
+                            }
+                            alertDialog1.dismiss();
+                        }
+                    };
+                    builder.setPositiveButton(yes, dialogClickListener);
+                    builder.setNegativeButton(no, dialogClickListener);
+                    alertDialog1 = builder.create();
+                    alertDialog1.show();
+                }
+                else {
+                    Log.d("kuy","nah");
+                    firebaseHelper.createNewDatabase();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
 
     //points thingyszzzzzz
     private void createPoints(){
-        SharedPreferences points = getActivity().getSharedPreferences("Englock Points", Context.MODE_PRIVATE);
+        SharedPreferences points = getActivity().getSharedPreferences("userStats", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = points.edit();
 
-        editor.putLong("pointsCount", 0);
+        editor.putLong("points", 0);
         editor.putBoolean("isPTsaved", true);
         editor.commit();
 
         updatePoints();
     }
 
-    private void updatePoints(){
-        SharedPreferences points = getActivity().getSharedPreferences("Englock Points", Context.MODE_PRIVATE);
+    public void updatePoints(){
+        SharedPreferences points = getActivity().getSharedPreferences("userStats", Context.MODE_PRIVATE);
 
-        long pts = points.getLong("pointsCount", -1);
+        long pts = points.getLong("points", -1);
 
         mTextMessage = (TextView)getView().findViewById(R.id.PtnCount);
         if(pts != -1) mTextMessage.setText(String.valueOf(pts));

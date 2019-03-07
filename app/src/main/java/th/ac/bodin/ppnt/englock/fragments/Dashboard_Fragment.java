@@ -20,10 +20,7 @@ import com.hookedonplay.decoviewlib.charts.EdgeDetail;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
 
-import org.w3c.dom.Text;
-
 import th.ac.bodin.ppnt.englock.R;
-import th.ac.bodin.ppnt.englock.stats.DashboardStats;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,8 +32,7 @@ public class Dashboard_Fragment extends Fragment {
     int series1Index;
     SeriesItem seriesItem1;
 
-    int seen;
-    int correct0;
+    long correct0, seen;
     boolean isZero = false;
 
     String temp;
@@ -73,10 +69,10 @@ public class Dashboard_Fragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        SharedPreferences shared = getActivity().getSharedPreferences("Englock Database", Context.MODE_PRIVATE);
+        SharedPreferences shared = getActivity().getSharedPreferences("userStats", Context.MODE_PRIVATE);
 
-        seen = shared.getInt("count", 0);
-        correct0 = shared.getInt("correct0", 0);
+        seen = shared.getLong("quesFound", 0);
+        correct0 = shared.getLong("quesCorrect", 0);
 
         arcView = (DecoView)getView().findViewById(R.id.ArcView);
         arcView.configureAngles(330, 0);
@@ -135,10 +131,10 @@ public class Dashboard_Fragment extends Fragment {
     }
 
     private void updateUI(){
-        SharedPreferences shared = getActivity().getSharedPreferences("Englock Database", Context.MODE_PRIVATE);
+        SharedPreferences shared = getActivity().getSharedPreferences("userStats", Context.MODE_PRIVATE);
         String[] temp = new String[3];
         String txt;
-        for(int i = 0; i < 3; i++) temp[i] = shared.getString("Recent" + String.valueOf(i), " ");
+        for(int i = 0; i < 3; i++) temp[i] = shared.getString("recent" + String.valueOf(i), "-");
         txt = "• " + temp[0] + "\n• " + temp[1] + "\n• " + temp[2];
         TextView mTextMessage = (TextView)getView().findViewById(R.id.recenttxt);
         mTextMessage.setText(txt);
