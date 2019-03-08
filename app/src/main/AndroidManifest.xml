@@ -26,6 +26,7 @@
             android:name=".MainActivity"
             android:label="@string/full_app_name"
             android:excludeFromRecents="true"
+            android:launchMode="singleTop"
             android:theme="@style/TestTheme"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -56,7 +57,7 @@
 
         <activity
             android:name=".LockscreenBeforeActivity"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
             android:excludeFromRecents="true"
             android:theme="@style/ThemePink"
             android:screenOrientation="portrait">
@@ -67,12 +68,13 @@
 
         <service
             android:name=".utils.LockscreenService"
-            android:exported="false"/>
+            android:exported="true" >
+        </service>
 
         <receiver
             android:name=".utils.LockscreenIntentReceiver"
-            android:excludeFromRecents="true">
-            <intent-filter>
+            android:exported="true">
+            <intent-filter> />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>

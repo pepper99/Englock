@@ -6,12 +6,16 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import th.ac.bodin.ppnt.englock.MainActivity;
 import th.ac.bodin.ppnt.englock.R;
@@ -22,16 +26,18 @@ public class LockscreenService extends Service {
     IntentFilter filter;
     NotificationManager notificationManager;
     SharedPreferences shared;
+    LockscreenService m_service;
+
+    public LockscreenService(Context applicationContext) {
+        super();
+    }
+
+    public LockscreenService() {
+    }
 
     @Override
     public IBinder onBind(Intent intent) {
         return null;
-    }
-
-
-    @Override
-    public void onStart(Intent intent, int startId) {
-        //handleCommand(intent);
     }
 
     @Override
@@ -45,17 +51,21 @@ public class LockscreenService extends Service {
     @Override
     @SuppressWarnings("deprecation")
     public void onCreate() {
-        KeyguardManager.KeyguardLock key;
+
+        Intent intent = new Intent(this, LockscreenService.class);
+        bindService(intent, m_serviceConnection, BIND_AUTO_CREATE);
+        /*KeyguardManager.KeyguardLock key;
         KeyguardManager km = (KeyguardManager)getSystemService(KEYGUARD_SERVICE);
 
         //This is deprecated, but it is a simple way to disable the lockscreen in code
         key = km.newKeyguardLock("IN");
 
-        key.disableKeyguard();
+        key.disableKeyguard();*/
 
+        Log.d("kuy","running");
         //Start listening for the Screen On, Screen Off, and Boot completed actions
-        filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
-        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+        //filter.addAction(Intent.ACTION_SCREEN_ON);
         filter.addAction(Intent.ACTION_BOOT_COMPLETED);
 
         //Set up a receiver to listen for the Intents in this Service
@@ -69,15 +79,32 @@ public class LockscreenService extends Service {
 
     @Override
     public void onDestroy() {
-        unregisterReceiver(receiver);
-        stopSelf();
-        notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancelAll();
         super.onDestroy();
+        Log.d("kuy", "service destroyed");
+        unregisterReceiver(receiver);
+        //stopSelf();
+        /*notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();*/
     }
 
-    public void showNotification() {
+    public class ServiceBinder extends Binder {
+        public LockscreenService getService() {
+            return LockscreenService.this;
+        }
+    }
+
+    private ServiceConnection m_serviceConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            m_service = ((LockscreenService.ServiceBinder)service).getService();
+        }
+
+        public void onServiceDisconnected(ComponentName className) {
+            m_service = null;
+        }
+    };
+
+    /*public void showNotification() {
 
         notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -119,5 +146,5 @@ public class LockscreenService extends Service {
 
         notification.setContentIntent(pendingIntent);
         notificationManager.notify(0, notification.build()); //show notification
-    }
+    }*/
 }

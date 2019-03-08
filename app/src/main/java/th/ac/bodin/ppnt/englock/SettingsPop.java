@@ -1,5 +1,6 @@
 package th.ac.bodin.ppnt.englock;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -26,6 +28,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.Locale;
+
+import th.ac.bodin.ppnt.englock.utils.LockscreenService;
 
 public class SettingsPop extends AppCompatActivity {
 
@@ -57,7 +61,7 @@ public class SettingsPop extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 SharedPreferences.Editor editor = shared.edit();
                 editor.putBoolean("isOn", isChecked);
-                editor.commit();
+                editor.apply();
             }
         });
 
@@ -260,5 +264,17 @@ public class SettingsPop extends AppCompatActivity {
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+    }
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                Log.i ("kuy", "it is running");
+                return true;
+            }
+        }
+        Log.i ("kuy", "not running");
+        return false;
     }
 }

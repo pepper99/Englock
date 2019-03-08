@@ -71,8 +71,6 @@ public class LockscreenActivity extends Activity {
 
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
 
-        Log.d("kuy", "kuy");
-
         setContentView(R.layout.activity_lockscreen);
 
         clickAns[0] = (Button)findViewById(R.id.choiceA);
@@ -122,7 +120,7 @@ public class LockscreenActivity extends Activity {
         SharedPreferences settings = getSharedPreferences("shopStats", Context.MODE_PRIVATE);
         int VocabSelection = settings.getInt("selected", 0);
 
-        Log.d("kuy", String.valueOf(VocabSelection));
+        Log.d("kuy", "selected = " + String.valueOf(VocabSelection));
 
         DatabaseOpenHelper db = new DatabaseOpenHelper(this);
         db.setTable(VocabSelection);
@@ -173,9 +171,10 @@ public class LockscreenActivity extends Activity {
         db.close();
 
         //countdown
+        this.firebaseHelper = new FirebaseHelper(this);
         cdt = new CountDownTimer((CountDownAmnt) * 1000, 1000) {
             public void onTick(long millisUntilFinished) {
-                if(crct == false){
+                if(!crct){
                     remainingTime = (int) millisUntilFinished / 1000;
                     pbTimer.setProgress(remainingTime+1);
                 }
@@ -245,8 +244,6 @@ public class LockscreenActivity extends Activity {
             if(ans == choices) {
                 long newPts = scoreCal(remainingTime, missCount);
                 crct = true;
-
-                this.firebaseHelper = new FirebaseHelper(this);
 
                 if (newPts > 0) {
                     SharedPreferences shared = getSharedPreferences("userStats", Context.MODE_PRIVATE);

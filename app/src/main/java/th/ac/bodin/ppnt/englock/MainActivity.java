@@ -1,5 +1,6 @@
 package th.ac.bodin.ppnt.englock;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
     SharedPreferences.OnSharedPreferenceChangeListener listener;
     SharedPreferences prefs;
+    private LockscreenService lockscreenService;
+    Intent mServiceIntent;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -92,9 +95,11 @@ public class MainActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
 
-        startService(new Intent(this, LockscreenService.class));
-
         setContentView(R.layout.activity_main);
+
+        lockscreenService = new LockscreenService(this);
+        mServiceIntent = new Intent(this, lockscreenService.getClass());
+        if (!isMyServiceRunning(lockscreenService.getClass())) startService(mServiceIntent);
 
         android.support.v7.widget.Toolbar myToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -113,13 +118,12 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationViewHelper.removeShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        SharedPreferences shared = getSharedPreferences("seenIntro", Context.MODE_PRIVATE);
+        SharedPreferences shared = getSharedPreferences("settings", Context.MODE_PRIVATE);
         boolean seenIntro = shared.getBoolean("seenIntro", false);
         if (!seenIntro){
             SharedPreferences.Editor editor = shared.edit();
             editor.putBoolean("seenIntro", true);
-            editor.commit();
-            Log.d("intro", "seen");
+            editor.apply();
             Intro();
         }
 
@@ -198,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        try {stopService(mServiceIntent);} catch(Exception ex) {}
         prefs.unregisterOnSharedPreferenceChangeListener(listener);
         super.onDestroy();
     }
@@ -255,5 +260,17 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(this, SettingsPop.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
+    }
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                Log.i ("kuy", "it is running");
+                return true;
+            }
+        }
+        Log.i ("kuy", "not running");
+        return false;
     }
 }
