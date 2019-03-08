@@ -31,6 +31,12 @@
     <string name="toobad">Better luck next time!</string>
     <string name="niceone">That\'s correct!</string>
 
+    //Free Shop
+    <string name="freeques">Confirm your selection?</string>
+    <string name="freeshoptitle1">Select your starting vocabulary pack!</string>
+    <string name="freeshoptitle2">(All of these can be purchased later.)</string>
+
+
     //Home
     <string name="welcome">Welcome,</string>
     <string name="statsFromCloud">Do you want to retrieve your data from the cloud or not? (If not, your cloud data will be replaced with your local data.)</string>

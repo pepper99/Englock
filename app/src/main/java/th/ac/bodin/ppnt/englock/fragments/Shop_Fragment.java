@@ -97,11 +97,11 @@ public class Shop_Fragment extends Fragment {
         boolean[] selecter = checkSelect();
         
         productList = new ArrayList<>();
-        productList.add(new Product(R.drawable.db_school_small, getResources().getString(R.string.shopItem0), "Default", 200, checker[0], selecter[0]));
-        productList.add(new Product(R.drawable.db_clothes_small, getResources().getString(R.string.shopItem1), "200", 200, checker[1], selecter[1]));
-        productList.add(new Product(R.drawable.db_emotions_small, getResources().getString(R.string.shopItem2), "200", 200, checker[2], selecter[2]));
-        productList.add(new Product(R.drawable.db_etiquette_small, getResources().getString(R.string.shopItem3), "1500", 1500, checker[3], selecter[3]));
-        productList.add(new Product(R.drawable.db_landforms_small, getResources().getString(R.string.shopItem4), "2000", 2000, checker[4], selecter[4]));
+        productList.add(new Product(R.drawable.db_school_small, getResources().getString(R.string.shopItem0), "500", 500, checker[0], selecter[0]));
+        productList.add(new Product(R.drawable.db_clothes_small, getResources().getString(R.string.shopItem1), "500", 500, checker[1], selecter[1]));
+        productList.add(new Product(R.drawable.db_emotions_small, getResources().getString(R.string.shopItem2), "500", 500, checker[2], selecter[2]));
+        productList.add(new Product(R.drawable.db_etiquette_small, getResources().getString(R.string.shopItem3), "500", 500, checker[3], selecter[3]));
+        productList.add(new Product(R.drawable.db_landforms_small, getResources().getString(R.string.shopItem4), "500", 500, checker[4], selecter[4]));
         
         return productList;
     }
@@ -116,7 +116,6 @@ public class Shop_Fragment extends Fragment {
             Log.d("kuy",String.valueOf(i) + " " + String.valueOf(checker[i]));
         }
 
-        checker[0] = true;
         return checker;
     }
 

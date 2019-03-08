@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".FreeShopMenu">
+
+    <LinearLayout
+        android:id="@+id/freeshop_titlebox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dropshadowbox"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/freeshop_title"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/thaisansneueregular"
+            android:text="@string/freeshoptitle1"
+            android:textColor="@color/bg_screen6"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/freeshop_subtitle"
+            android:layout_marginBottom="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/thaisansneueregular"
+            android:text="@string/freeshoptitle2"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <ViewStub
+        android:id="@+id/freeshop_stub_grid"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:inflatedId="@+id/showlayout"
+        android:layout="@layout/freeshop_gridview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/freeshop_titlebox" />
+
+</android.support.constraint.ConstraintLayout>

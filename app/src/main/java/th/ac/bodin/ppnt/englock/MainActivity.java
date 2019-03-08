@@ -120,6 +120,10 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences shared = getSharedPreferences("settings", Context.MODE_PRIVATE);
         boolean seenIntro = shared.getBoolean("seenIntro", false);
+        boolean gotFreeItem = shared.getBoolean("gotFreeItem", false);
+
+        if (!gotFreeItem) FreeShop();
+
         if (!seenIntro){
             SharedPreferences.Editor editor = shared.edit();
             editor.putBoolean("seenIntro", true);
@@ -180,6 +184,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void Intro() {
         Intent i = new Intent(MainActivity.this, WelcomeActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
+    }
+
+    public void FreeShop() {
+        Intent i = new Intent(MainActivity.this, FreeShopMenu.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
     }

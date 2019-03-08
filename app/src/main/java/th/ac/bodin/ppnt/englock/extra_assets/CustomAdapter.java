@@ -52,14 +52,9 @@ public class CustomAdapter extends ArrayAdapter<Product> {
             pt.setVisibility(View.GONE);
         }
 
-        if(position == 0) {
-            txtDescription.setText("Default");
-            pt.setVisibility(View.GONE);
-        }
-
         if (product.isSelected()) {
             LinearLayout layout =(LinearLayout) v.findViewById(R.id.grid_item);
-            layout.setBackgroundResource(R.drawable.gradient03);
+            layout.setBackgroundResource(R.drawable.selectedbox);
             txtDescription.setText("Selected");
             pt.setVisibility(View.GONE);
         }

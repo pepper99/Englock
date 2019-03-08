@@ -31,6 +31,10 @@ public class FirebaseHelper {
         this.context = context;
     }
 
+    public boolean isIdExist() {
+        return id != null;
+    }
+
     public void createNewDatabase() {
         this.childUpdates = new HashMap<>();
         this.shopStats = new HashMap<>();
@@ -155,50 +159,61 @@ public class FirebaseHelper {
     }
 
     public void updateToCloud(String childName, int statsType, long val) {
-        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("users").child(id);
-        switch (statsType) {
-            case 0:
-                mRef.child("userStats").child(childName).setValue(val);
-                break;
-            case 1:
-                mRef.child("shopStats").child(childName).setValue(val);
-                break;
+        if (isIdExist()){
+            DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("users").child(id);
+            switch (statsType) {
+                case 0:
+                    mRef.child("userStats").child(childName).setValue(val);
+                    break;
+                case 1:
+                    mRef.child("shopStats").child(childName).setValue(val);
+                    break;
+            }
         }
     }
 
     public void updateToCloud(String childName, int statsType, int val) {
-        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("users").child(id);
-        switch (statsType) {
-            case 0:
-                mRef.child("userStats").child(childName).setValue(val);
-                break;
-            case 1:
-                mRef.child("shopStats").child(childName).setValue(val);
-                break;
+        if (isIdExist()){
+            DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("users").child(id);
+            switch (statsType) {
+                case 0:
+                    mRef.child("userStats").child(childName).setValue(val);
+                    break;
+                case 1:
+                    mRef.child("shopStats").child(childName).setValue(val);
+                    break;
+            }
+
         }
     }
 
     public void updateToCloud(String childName, int statsType, String val) {
-        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("users").child(id);
-        switch (statsType) {
-            case 0:
-                mRef.child("userStats").child(childName).setValue(val);
-                break;
-            case 1:
-                mRef.child("shopStats").child(childName).setValue(val);
-                break;
+        if (isIdExist()){
+            DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("users").child(id);
+            switch (statsType) {
+                case 0:
+                    mRef.child("userStats").child(childName).setValue(val);
+                    break;
+                case 1:
+                    mRef.child("shopStats").child(childName).setValue(val);
+                    break;
+            }
+
         }
     }
 
     public void updateToCloud(String childName, int statsType, Boolean val) {
-        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("users").child(id);
-        switch (statsType) {
-            case 0:
-                mRef.child("userStats").child(childName).setValue(val);
-                break;
-            case 1:
-                mRef.child("shopStats").child(childName).setValue(val);
-                break;
+        if (isIdExist()){
+            DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("users").child(id);
+            switch (statsType) {
+                case 0:
+                    mRef.child("userStats").child(childName).setValue(val);
+                    break;
+                case 1:
+                    mRef.child("shopStats").child(childName).setValue(val);
+                    break;
+            }
+
         }
     }
 

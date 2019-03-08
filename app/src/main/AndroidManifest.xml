@@ -36,8 +36,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".WelcomeActivity">
-        </activity>
+        <activity android:name=".WelcomeActivity"/>
+
+        <activity android:name=".FreeShopMenu"/>
 
         <activity
             android:name=".SettingsPop"
@@ -74,7 +75,7 @@
         <receiver
             android:name=".utils.LockscreenIntentReceiver"
             android:exported="true">
-            <intent-filter> />
+            <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
