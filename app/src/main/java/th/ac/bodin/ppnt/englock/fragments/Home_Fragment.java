@@ -126,6 +126,21 @@ public class Home_Fragment extends Fragment {
             case 4:
                 ThemePic.setImageResource(R.drawable.db_landforms);
                 break;
+            case 5:
+                ThemePic.setImageResource(R.drawable.db_fruits);
+                break;
+            case 6:
+                ThemePic.setImageResource(R.drawable.db_kingdom);
+                break;
+            case 7:
+                ThemePic.setImageResource(R.drawable.db_outerspace);
+                break;
+            case 8:
+                ThemePic.setImageResource(R.drawable.db_festival);
+                break;
+            case 9:
+                ThemePic.setImageResource(R.drawable.db_music);
+                break;
         }
 
     }

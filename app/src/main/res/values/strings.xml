@@ -53,10 +53,16 @@
     <string name="shopItem2">Emotions</string>
     <string name="shopItem3">Etiquette</string>
     <string name="shopItem4">Landforms</string>
+    <string name="shopItem5">Fruits</string>
+    <string name="shopItem6">Kingdom</string>
+    <string name="shopItem7">Outer Space</string>
+    <string name="shopItem8">Festival</string>
+    <string name="shopItem9">Music</string>
     <string name="buyquestion1">Are you sure you want to buy</string>
     <string name="buyquestion2">\" vocabulary category for</string>
     <string name="buyquestion3">coins?</string>
-    <string name="bought">Bought</string>
+    <string name="purchased">Purchased</string>
+    <string name="selected">Selected</string>
 
     //Settings
     <string name="lockscreenquiz">Lock screen quiz</string>

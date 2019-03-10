@@ -13,11 +13,20 @@
     <string name="recent">คำศัพท์ที่พบล่าสุด</string>
     <string name="statswheel">(ถูกในครั้งแรก/คำถามที่พบ</string>
     <string name="statswheelunset">(ถูกในครั้งแรก/คำถามที่พบ : 0/0)</string>
+
     <string name="shopItem0">โรงเรียน</string>
     <string name="shopItem1">เครื่องแต่งกาย</string>
     <string name="shopItem2">อารมณ์</string>
     <string name="shopItem3">มารยาทสังคม</string>
     <string name="shopItem4">ธรณีสัณฐาน</string>
+    <string name="shopItem5">ผลไม้</string>
+    <string name="shopItem6">อาณาจักร</string>
+    <string name="shopItem7">อวกาศ</string>
+    <string name="shopItem8">งานเทศกาล</string>
+    <string name="shopItem9">ดนตรี</string>
+    <string name="purchased">มีไอเทมนี้แล้ว</string>
+    <string name="selected">ตัวเลือกของคุณ</string>
+
     <string name="buyquestion1">คุณแน่ใจหรือไม่ที่จะซื้อคำศัพท์หมวด</string>
     <string name="buyquestion2">\" ในราคา</string>
     <string name="buyquestion3">เหรียญ</string>
@@ -38,7 +47,6 @@
     <string name="settingarray3">เกี่ยวกับเรา</string>
     <string name="settingarray1">ตั้งค่า</string>
     <string name="settingarray4">ข้อตกลง</string>
-    <string name="bought">ซื้อแล้ว</string>
     <string name="queslang">โปรดเลือกภาษา</string>
     <string name="quesdelay">โปรดเลือกระยะเวลา</string>
     <string name="confirmation">โปรดยืนยัน</string>

@@ -29,15 +29,61 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:menu="@menu/toolbarmenu">
 
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|end"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
-            <ImageView
-                android:id="@+id/englockIcon"
-                android:layout_width="140dp"
-                android:layout_height="40dp"
-                android:visibility="visible"
-                app:srcCompat="@drawable/ic_englock_iconlong"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="8dp" />
+                <ImageView
+                    android:id="@+id/englockIcon"
+                    android:layout_width="140dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_englock_iconlong" />
+
+                <LinearLayout
+                    android:id="@+id/pointsLayout"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/roundcorner"
+                    android:backgroundTint="#39d51f"
+                    android:gravity="right|center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/dollarIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
+                        android:tint="@color/white"
+                        app:srcCompat="@drawable/ic_monetization_on_yellow_24dp" />
+
+                    <TextView
+                        android:id="@+id/pointsText"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:autoSizeTextType="uniform"
+                        android:gravity="right|center_vertical"
+                        android:text="9001"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+            </android.support.constraint.ConstraintLayout>
 
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>

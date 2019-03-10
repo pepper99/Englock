@@ -58,6 +58,11 @@ public class FreeShopMenu extends Activity {
         productList.add(new FreeShopProduct(R.drawable.db_emotions_small, getResources().getString(R.string.shopItem2)));
         productList.add(new FreeShopProduct(R.drawable.db_etiquette_small, getResources().getString(R.string.shopItem3)));
         productList.add(new FreeShopProduct(R.drawable.db_landforms_small, getResources().getString(R.string.shopItem4)));
+        productList.add(new FreeShopProduct(R.drawable.db_fruits_small, getResources().getString(R.string.shopItem5)));
+        productList.add(new FreeShopProduct(R.drawable.db_kingdom_small, getResources().getString(R.string.shopItem6)));
+        productList.add(new FreeShopProduct(R.drawable.db_outerspace_small, getResources().getString(R.string.shopItem7)));
+        productList.add(new FreeShopProduct(R.drawable.db_festival_small, getResources().getString(R.string.shopItem8)));
+        productList.add(new FreeShopProduct(R.drawable.db_music_small, getResources().getString(R.string.shopItem9)));
 
         return productList;
     }

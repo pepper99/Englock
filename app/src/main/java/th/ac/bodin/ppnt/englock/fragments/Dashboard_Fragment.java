@@ -122,9 +122,9 @@ public class Dashboard_Fragment extends Fragment {
         });
 
         arcView.addEvent(new DecoEvent.Builder(DecoEvent.EventType.EVENT_SHOW, true)
-                .setDuration(300)
+                .setDuration(5)
                 .build());
-        arcView.addEvent(new DecoEvent.Builder(correct0).setIndex(series1Index).setDelay(400).build());
+        arcView.addEvent(new DecoEvent.Builder(correct0).setIndex(series1Index).setDelay(75).build());
 
         updateUI();
 
@@ -137,6 +137,8 @@ public class Dashboard_Fragment extends Fragment {
         for(int i = 0; i < 3; i++) temp[i] = shared.getString("recent" + String.valueOf(i), "-");
         txt = "• " + temp[0] + "\n• " + temp[1] + "\n• " + temp[2];
         TextView mTextMessage = (TextView)getView().findViewById(R.id.recenttxt);
+        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.O)
+            TextViewCompat.setAutoSizeTextTypeWithDefaults(mTextMessage, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
         mTextMessage.setText(txt);
     }
 }

@@ -20,10 +20,11 @@ public class FirebaseHelper {
 
     private String id;
     private Context context;
-    private int shop_item_amount = 5;
     private Map<String, Object> childUpdates;
     private HashMap<String, Object> shopStats;
     private HashMap<String, Object> userStats;
+
+    private int shop_item_amount = 10;
 
     public FirebaseHelper(Context context) {
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(context);

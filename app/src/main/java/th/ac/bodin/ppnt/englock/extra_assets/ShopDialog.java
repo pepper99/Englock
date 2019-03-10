@@ -51,6 +51,8 @@ public class ShopDialog extends DialogFragment {
     private int position;
     private long price;
 
+    private android.support.v4.app.Fragment fragment;
+
     private DialogInterface.OnDismissListener onDismissListener;
 
     public void setOnDismissListener(DialogInterface.OnDismissListener onDismissListener) {
@@ -180,6 +182,14 @@ public class ShopDialog extends DialogFragment {
 
                 if( state == 2 ) Toast.makeText(getActivity(), "Sorry, you don't have enough points.", Toast.LENGTH_SHORT).show();
                 else if( state == 0 ) Toast.makeText(getActivity(), "You already bought this item.", Toast.LENGTH_SHORT).show();
+
+                else {
+                    android.support.v4.app.FragmentTransaction fragmentTransaction = fragment.getFragmentManager().beginTransaction();
+                    fragmentTransaction.detach(fragment);
+                    fragmentTransaction.attach(fragment);
+                    fragmentTransaction.commit();
+                }
+
                 dismiss();
             }
         });
@@ -203,6 +213,10 @@ public class ShopDialog extends DialogFragment {
             this.dismiss();
         }
         return false;
+    }
+
+    public void setFragment(android.support.v4.app.Fragment fragment){
+        this.fragment = fragment;
     }
 
     @Override

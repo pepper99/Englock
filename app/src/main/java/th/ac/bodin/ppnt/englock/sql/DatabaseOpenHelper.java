@@ -9,7 +9,7 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 public class DatabaseOpenHelper extends SQLiteAssetHelper {
     private static final String DATABASE_NAME = "Vocabtest.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     private String sqlTables;
 
@@ -35,26 +35,56 @@ public class DatabaseOpenHelper extends SQLiteAssetHelper {
             case 4:
                 this.sqlTables = "landforms";
                 break;
+            case 5:
+                this.sqlTables = "fruits";
+                break;
+            case 6:
+                this.sqlTables = "kingdom";
+                break;
+            case 7:
+                this.sqlTables = "outerspace";
+                break;
+            case 8:
+                this.sqlTables = "festival";
+                break;
+            case 9:
+                this.sqlTables = "music";
+                break;
         }
     }
 
     public int getNumberOfData (int i) {
-        int n = 30;
+        int n = 50;
         switch (i) {
             case 0:
-                n = 15;
+                n = 50;
                 break;
             case 1:
-                n = 15;
+                n = 50;
                 break;
             case 2:
-                n = 15;
+                n = 50;
                 break;
             case 3:
-                n = 30;
+                n = 50;
                 break;
             case 4:
-                n = 30;
+                n = 50;
+                break;
+            case 5:
+                n = 50;
+                break;
+            case 6:
+                n = 50;
+                break;
+            case 7:
+                n = 50;
+                break;
+            case 8:
+                n = 50;
+                break;
+            case 9:
+                n = 50;
                 break;
         }
         return n;

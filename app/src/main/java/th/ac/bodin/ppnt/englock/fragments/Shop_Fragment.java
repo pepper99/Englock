@@ -1,5 +1,6 @@
 package th.ac.bodin.ppnt.englock.fragments;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -46,7 +47,9 @@ public class Shop_Fragment extends Fragment {
     TextView mTextMessage;
     boolean[] productStatus;
 
-    int n = 5;
+    Fragment fragment;
+
+    int n = 10;
 
     public static Shop_Fragment newInstance() {
         return new Shop_Fragment();
@@ -62,11 +65,7 @@ public class Shop_Fragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.O){
-            TextView coin;
-            coin = (TextView) getView().findViewById(R.id.ptnShop);
-            TextViewCompat.setAutoSizeTextTypeWithDefaults(coin, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
-        }
+        this.fragment = this;
 
         SharedPreferences shared = getActivity().getSharedPreferences("userStats", Context.MODE_PRIVATE);
         boolean isPTsaved = shared.getBoolean("isPTsaved", false);
@@ -102,6 +101,11 @@ public class Shop_Fragment extends Fragment {
         productList.add(new Product(R.drawable.db_emotions_small, getResources().getString(R.string.shopItem2), "500", 500, checker[2], selecter[2]));
         productList.add(new Product(R.drawable.db_etiquette_small, getResources().getString(R.string.shopItem3), "500", 500, checker[3], selecter[3]));
         productList.add(new Product(R.drawable.db_landforms_small, getResources().getString(R.string.shopItem4), "500", 500, checker[4], selecter[4]));
+        productList.add(new Product(R.drawable.db_fruits_small, getResources().getString(R.string.shopItem5), "500", 500, checker[5], selecter[5]));
+        productList.add(new Product(R.drawable.db_kingdom_small, getResources().getString(R.string.shopItem6), "500", 500, checker[6], selecter[6]));
+        productList.add(new Product(R.drawable.db_outerspace_small, getResources().getString(R.string.shopItem7), "500", 500, checker[7], selecter[7]));
+        productList.add(new Product(R.drawable.db_festival_small, getResources().getString(R.string.shopItem8), "500", 500, checker[8], selecter[8]));
+        productList.add(new Product(R.drawable.db_music_small, getResources().getString(R.string.shopItem9), "500", 500, checker[9], selecter[9]));
         
         return productList;
     }
@@ -166,12 +170,7 @@ public class Shop_Fragment extends Fragment {
                         .setPosition(position)
                         .setPrice(price)
                         .build();
-                alert.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        reloadFt();
-                    }
-                });
+                alert.setFragment(fragment);
                 alert.show(getActivity().getFragmentManager(), "SHOPPEEE");
             }
 
@@ -219,15 +218,13 @@ public class Shop_Fragment extends Fragment {
 
         long pts = points.getLong("points", -1);
 
-        mTextMessage = (TextView)getView().findViewById(R.id.ptnShop);
-        if(pts != -1) mTextMessage.setText(String.valueOf(pts));
-        else mTextMessage.setText("ERROR");
-    }
+        Activity activity = getActivity();
+        if(activity instanceof MainActivity) {
+            ((MainActivity) activity).updatePoints(pts);
+        }
 
-    public void reloadFt() {
-        android.support.v4.app.FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.detach(this);
-        fragmentTransaction.attach(this);
-        fragmentTransaction.commit();
+        /*mTextMessage = (TextView)getView().findViewById(R.id.pointsText);
+        if(pts != -1) mTextMessage.setText(String.valueOf(pts));
+        else mTextMessage.setText("ERROR");*/
     }
 }

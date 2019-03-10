@@ -48,14 +48,14 @@ public class CustomAdapter extends ArrayAdapter<Product> {
 
         if(product.isBought()) {
             tick.setVisibility(View.VISIBLE);
-            txtDescription.setText("Bought");
+            txtDescription.setText(R.string.purchased);
             pt.setVisibility(View.GONE);
         }
 
         if (product.isSelected()) {
             LinearLayout layout =(LinearLayout) v.findViewById(R.id.grid_item);
             layout.setBackgroundResource(R.drawable.selectedbox);
-            txtDescription.setText("Selected");
+            txtDescription.setText(R.string.selected);
             pt.setVisibility(View.GONE);
         }
 

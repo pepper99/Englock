@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/thaisansneueregular"
             android:text="@string/freeshoptitle1"
-            android:textColor="@color/bg_screen6"
+            android:textColor="@color/green"
             android:textSize="26sp"
             android:textStyle="bold" />
 

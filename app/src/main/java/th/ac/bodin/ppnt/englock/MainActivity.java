@@ -12,12 +12,15 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Locale;
@@ -36,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences prefs;
     private LockscreenService lockscreenService;
     Intent mServiceIntent;
+    LinearLayout pointsLayout;
+    TextView pointsText;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -51,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                                     Home_Fragment.newInstance(),
                                     "HOME")
                             .commit();
+                    if(pointsLayout.getVisibility() == View.VISIBLE) pointsLayout.setVisibility(View.INVISIBLE);
                     return true;
 
                 case R.id.item_dashboard:
@@ -62,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                                     Dashboard_Fragment.newInstance(),
                                     "DASH")
                             .commit();
+                    if(pointsLayout.getVisibility() == View.VISIBLE) pointsLayout.setVisibility(View.INVISIBLE);
                     return true;
 
                 case R.id.item_shop:
@@ -73,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                                     Shop_Fragment.newInstance(),
                                     "SHOP")
                             .commit();
+                    if(pointsLayout.getVisibility() == View.INVISIBLE) pointsLayout.setVisibility(View.VISIBLE);
                     return true;
 
                 case R.id.item_more:
@@ -84,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                                     More_Fragment.newInstance(),
                                     "MORE")
                             .commit();
+                    if(pointsLayout.getVisibility() == View.VISIBLE) pointsLayout.setVisibility(View.INVISIBLE);
                     return true;
             }
             return true;
@@ -96,6 +105,12 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         setContentView(R.layout.activity_main);
+
+        pointsLayout = findViewById(R.id.pointsLayout);
+        pointsText = findViewById(R.id.pointsText);
+
+        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.O)
+            TextViewCompat.setAutoSizeTextTypeWithDefaults(pointsText, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
 
         lockscreenService = new LockscreenService(this);
         mServiceIntent = new Intent(this, lockscreenService.getClass());
@@ -282,5 +297,11 @@ public class MainActivity extends AppCompatActivity {
         }
         Log.i ("kuy", "not running");
         return false;
+    }
+
+    public void updatePoints(long points) {
+        if(pointsText != null) {
+            pointsText.setText(String.valueOf(points));
+        }
     }
 }
