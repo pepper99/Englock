@@ -44,8 +44,12 @@ public class Shop_Fragment extends Fragment {
     private GridView gridView;
     private CustomAdapter gridViewAdapter;
     private List<Product> productList;
-    TextView mTextMessage;
-    boolean[] productStatus;
+
+    boolean[] checker;
+    boolean[] selecter;
+    int selected;
+
+    private SharedPreferences shared;
 
     Fragment fragment;
 
@@ -58,6 +62,8 @@ public class Shop_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        checker = checkProduct();
+        selecter = checkSelect();
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_shop_, container, false);
     }
@@ -67,7 +73,7 @@ public class Shop_Fragment extends Fragment {
 
         this.fragment = this;
 
-        SharedPreferences shared = getActivity().getSharedPreferences("userStats", Context.MODE_PRIVATE);
+        shared = getActivity().getSharedPreferences("userStats", Context.MODE_PRIVATE);
         boolean isPTsaved = shared.getBoolean("isPTsaved", false);
 
         if(isPTsaved) updatePoints(shared);
@@ -78,24 +84,17 @@ public class Shop_Fragment extends Fragment {
 
         gridView = (GridView) getView().findViewById(R.id.mygridview);
 
-        getProductList();
-        this.productStatus = checkProduct();
-
         gridView.setOnItemClickListener(onItemClick);
 
-        //Display gridview
-        stubGrid.setVisibility(View.VISIBLE);
+        this.productList = loadProductList();
 
         gridViewAdapter = new CustomAdapter(this.getContext(), R.layout.grid_item, productList);
         gridView.setAdapter(gridViewAdapter);
     }
 
-    private List<Product> getProductList() {
+    private ArrayList<Product> loadProductList() {
         //pseudo code to get product, replace your code to get real product here
-        boolean[] checker = checkProduct();
-        boolean[] selecter = checkSelect();
-        
-        productList = new ArrayList<>();
+        ArrayList<Product> productList = new ArrayList<>();
         productList.add(new Product(R.drawable.db_school_small, getResources().getString(R.string.shopItem0), "500", 500, checker[0], selecter[0]));
         productList.add(new Product(R.drawable.db_clothes_small, getResources().getString(R.string.shopItem1), "500", 500, checker[1], selecter[1]));
         productList.add(new Product(R.drawable.db_emotions_small, getResources().getString(R.string.shopItem2), "500", 500, checker[2], selecter[2]));
@@ -106,7 +105,7 @@ public class Shop_Fragment extends Fragment {
         productList.add(new Product(R.drawable.db_outerspace_small, getResources().getString(R.string.shopItem7), "500", 500, checker[7], selecter[7]));
         productList.add(new Product(R.drawable.db_festival_small, getResources().getString(R.string.shopItem8), "500", 500, checker[8], selecter[8]));
         productList.add(new Product(R.drawable.db_music_small, getResources().getString(R.string.shopItem9), "500", 500, checker[9], selecter[9]));
-        
+
         return productList;
     }
 
@@ -117,7 +116,6 @@ public class Shop_Fragment extends Fragment {
 
         for (int i = 0; i < n; i++){
             checker[i] = shoppee.getBoolean("shopItem" + String.valueOf(i), false);
-            Log.d("kuy",String.valueOf(i) + " " + String.valueOf(checker[i]));
         }
 
         return checker;
@@ -128,7 +126,7 @@ public class Shop_Fragment extends Fragment {
 
         SharedPreferences shoppee = getActivity().getSharedPreferences("shopStats", Context.MODE_PRIVATE);
 
-        int selected = shoppee.getInt("selected", 0);
+        selected = shoppee.getInt("selected", 0);
 
         for (int i = 0; i < n; i++){
             if( i == selected ) checker[i] = true;
@@ -139,10 +137,15 @@ public class Shop_Fragment extends Fragment {
 
     AdapterView.OnItemClickListener onItemClick = new AdapterView.OnItemClickListener() {
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
             //Do any thing when user click to item
 
             if(productList.get(position).isBought()) {
+
+                productList.get(selected).setSelected(false);
+                productList.get(position).setSelected(true);
+
+                selected = position;
 
                 SharedPreferences shoppee = getActivity().getSharedPreferences("shopStats", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = shoppee.edit();
@@ -171,6 +174,16 @@ public class Shop_Fragment extends Fragment {
                         .setPrice(price)
                         .build();
                 alert.setFragment(fragment);
+                alert.setProduct(productList.get(position));
+                alert.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        if (productList.get(position).isBought()) {
+                            updatePoints(shared);
+                            apply();
+                        }
+                    }
+                });
                 alert.show(getActivity().getFragmentManager(), "SHOPPEEE");
             }
 
@@ -190,16 +203,9 @@ public class Shop_Fragment extends Fragment {
     }
 
     private void apply() {
-        getProductList();
-        this.productStatus = checkProduct();
-
-        gridView.setOnItemClickListener(onItemClick);
-
-        //Display gridview
-        stubGrid.setVisibility(View.VISIBLE);
-
-        gridViewAdapter = new CustomAdapter(this.getContext(), R.layout.grid_item, productList);
-        gridView.setAdapter(gridViewAdapter);
+        gridViewAdapter.notifyDataSetChanged();
+        gridView.invalidateViews();
+        //gridView.setAdapter(gridViewAdapter);
     }
 
     //points thingyszzzzzz
@@ -215,16 +221,11 @@ public class Shop_Fragment extends Fragment {
     }
 
     private void updatePoints(SharedPreferences points){
-
         long pts = points.getLong("points", -1);
 
         Activity activity = getActivity();
         if(activity instanceof MainActivity) {
             ((MainActivity) activity).updatePoints(pts);
         }
-
-        /*mTextMessage = (TextView)getView().findViewById(R.id.pointsText);
-        if(pts != -1) mTextMessage.setText(String.valueOf(pts));
-        else mTextMessage.setText("ERROR");*/
     }
 }

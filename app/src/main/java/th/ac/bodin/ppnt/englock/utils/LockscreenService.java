@@ -1,6 +1,7 @@
 package th.ac.bodin.ppnt.englock.utils;
 
 import android.app.KeyguardManager;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -27,6 +28,7 @@ public class LockscreenService extends Service {
     NotificationManager notificationManager;
     SharedPreferences shared;
     LockscreenService m_service;
+    int NOTIFICATION_ID = 1150;
 
     public LockscreenService(Context applicationContext) {
         super();
@@ -51,6 +53,7 @@ public class LockscreenService extends Service {
     @Override
     @SuppressWarnings("deprecation")
     public void onCreate() {
+        startForeground();
 
         Intent intent = new Intent(this, LockscreenService.class);
         bindService(intent, m_serviceConnection, BIND_AUTO_CREATE);
@@ -79,9 +82,10 @@ public class LockscreenService extends Service {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         Log.d("kuy", "service destroyed");
         unregisterReceiver(receiver);
+
+        super.onDestroy();
         //stopSelf();
         /*notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -104,47 +108,18 @@ public class LockscreenService extends Service {
         }
     };
 
-    /*public void showNotification() {
+    private void startForeground() {
+        // create the notification
+        Notification.Builder m_notificationBuilder = new Notification.Builder(this)
+                .setContentTitle(getText(R.string.app_name))
+                .setContentText("test")
+                .setSmallIcon(R.drawable.englock_icon_pink);
 
-        notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        // create the pending intent and add to the notification
+        Intent intent = new Intent(this, LockscreenService.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        m_notificationBuilder.setContentIntent(pendingIntent);
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            // Create the NotificationChannel, but only on API 26+ because
-            // the NotificationChannel class is new and not in the support library
-
-            CharSequence channel_name = getString(R.string.channel_name);
-            String channel_description = getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_LOW;
-
-            NotificationChannel channel = new NotificationChannel("default",
-                    channel_name,
-                    importance);
-            channel.setDescription(channel_description);
-            // Register the channel with the system
-            notificationManager.createNotificationChannel(channel);
-        }
-        shared = getSharedPreferences("settings", Context.MODE_PRIVATE);
-        Boolean isOn = shared.getBoolean("isOn",true);
-
-        NotificationCompat.Builder notification =
-                new NotificationCompat.Builder(this, "default") // this is context
-                        .setColor(this.getResources().getColor(R.color.green))
-                        .setSmallIcon(R.mipmap.ic_launcher_round)
-                        .setOngoing(true)
-                        .setContentTitle("Englock")
-                        .setContentTitle("Englock is currently running.")
-                        .setAutoCancel(false)
-                        .setPriority(NotificationCompat.PRIORITY_LOW);
-
-        notification.setDefaults(0);
-
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-
-        PendingIntent pendingIntent =
-                PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        notification.setContentIntent(pendingIntent);
-        notificationManager.notify(0, notification.build()); //show notification
-    }*/
+        startForeground(NOTIFICATION_ID, m_notificationBuilder.build());
+    }
 }

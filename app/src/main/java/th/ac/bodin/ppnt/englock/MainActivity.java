@@ -1,6 +1,8 @@
 package th.ac.bodin.ppnt.englock;
 
 import android.app.ActivityManager;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -104,6 +106,26 @@ public class MainActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
 
+        SharedPreferences shared = getSharedPreferences("settings", Context.MODE_PRIVATE);
+        int selectlang = shared.getInt("lang",0);
+        String lang = "en";
+        switch(selectlang)
+        {
+            case 0:
+                lang = "en";
+                break;
+            case 1:
+                lang = "th";
+                break;
+        }
+
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+
         setContentView(R.layout.activity_main);
 
         pointsLayout = findViewById(R.id.pointsLayout);
@@ -114,7 +136,9 @@ public class MainActivity extends AppCompatActivity {
 
         lockscreenService = new LockscreenService(this);
         mServiceIntent = new Intent(this, lockscreenService.getClass());
-        if (!isMyServiceRunning(lockscreenService.getClass())) startService(mServiceIntent);
+        if (!isMyServiceRunning(lockscreenService.getClass())){
+            startService(mServiceIntent);
+        }
 
         android.support.v7.widget.Toolbar myToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -133,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationViewHelper.removeShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        SharedPreferences shared = getSharedPreferences("settings", Context.MODE_PRIVATE);
+        shared = getSharedPreferences("settings", Context.MODE_PRIVATE);
         boolean seenIntro = shared.getBoolean("seenIntro", false);
         boolean gotFreeItem = shared.getBoolean("gotFreeItem", false);
 
@@ -176,25 +200,7 @@ public class MainActivity extends AppCompatActivity {
         };
         prefs.registerOnSharedPreferenceChangeListener(listener);
 
-        shared = getSharedPreferences("settings", Context.MODE_PRIVATE);
-        int selectlang = shared.getInt("lang",0);
-        String lang = "en";
-        switch(selectlang)
-        {
-            case 0:
-                lang = "en";
-                break;
-            case 1:
-                lang = "th";
-                break;
-        }
 
-        Locale myLocale = new Locale(lang);
-        Resources res = getResources();
-        DisplayMetrics dm = res.getDisplayMetrics();
-        Configuration conf = res.getConfiguration();
-        conf.locale = myLocale;
-        res.updateConfiguration(conf, dm);
     }
 
     public void Intro() {
@@ -216,6 +222,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onBackPressed() {
+        stopService(mServiceIntent);
         super.onBackPressed();
     }
 

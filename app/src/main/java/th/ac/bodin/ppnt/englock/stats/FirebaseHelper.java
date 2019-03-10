@@ -52,7 +52,7 @@ public class FirebaseHelper {
         sharedPreferences = context.getSharedPreferences("shopStats", Context.MODE_PRIVATE);
         for(int i = 0; i < shop_item_amount; i++){
             shopStats.put("shopItem" + String.valueOf(i),
-                    sharedPreferences.getBoolean("product" + String.valueOf(i), false));
+                    sharedPreferences.getBoolean("shopItem" + String.valueOf(i), false));
         }
         shopStats.put("selected", sharedPreferences.getInt("selected", 0));
 

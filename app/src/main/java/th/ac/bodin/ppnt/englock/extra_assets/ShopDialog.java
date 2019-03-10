@@ -51,6 +51,8 @@ public class ShopDialog extends DialogFragment {
     private int position;
     private long price;
 
+    Product product;
+
     private android.support.v4.app.Fragment fragment;
 
     private DialogInterface.OnDismissListener onDismissListener;
@@ -184,10 +186,7 @@ public class ShopDialog extends DialogFragment {
                 else if( state == 0 ) Toast.makeText(getActivity(), "You already bought this item.", Toast.LENGTH_SHORT).show();
 
                 else {
-                    android.support.v4.app.FragmentTransaction fragmentTransaction = fragment.getFragmentManager().beginTransaction();
-                    fragmentTransaction.detach(fragment);
-                    fragmentTransaction.attach(fragment);
-                    fragmentTransaction.commit();
+                    product.setBoughtStat(true);;
                 }
 
                 dismiss();
@@ -218,6 +217,8 @@ public class ShopDialog extends DialogFragment {
     public void setFragment(android.support.v4.app.Fragment fragment){
         this.fragment = fragment;
     }
+
+    public void setProduct(Product product) { this.product = product; }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

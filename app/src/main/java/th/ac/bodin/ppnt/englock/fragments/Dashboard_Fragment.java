@@ -57,13 +57,6 @@ public class Dashboard_Fragment extends Fragment {
 
     @Override
     public void onResume() {
-
-        arcView.addEvent(new DecoEvent.Builder(DecoEvent.EventType.EVENT_SHOW, true)
-                .setDuration(1000)
-                .build());
-        arcView.addEvent(new DecoEvent.Builder(correct0).setIndex(series1Index).setDelay(400).build());
-
-        updateUI();
         super.onResume();
     }
 
@@ -122,9 +115,9 @@ public class Dashboard_Fragment extends Fragment {
         });
 
         arcView.addEvent(new DecoEvent.Builder(DecoEvent.EventType.EVENT_SHOW, true)
-                .setDuration(5)
+                .setDuration(400)
                 .build());
-        arcView.addEvent(new DecoEvent.Builder(correct0).setIndex(series1Index).setDelay(75).build());
+        arcView.addEvent(new DecoEvent.Builder(correct0).setIndex(series1Index).setDelay(200).setDuration(2000).build());
 
         updateUI();
 

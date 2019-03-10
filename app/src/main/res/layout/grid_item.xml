@@ -36,7 +36,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:tint="#90e981"
-            android:visibility="invisible"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_check_white_24dp" />
@@ -58,7 +58,7 @@
             android:gravity="center"
             android:text="Title"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="24sp"
+            android:textSize="26sp"
             android:textStyle="bold" />
     </FrameLayout>
 
@@ -88,7 +88,7 @@
             android:fontFamily="@font/thaisansneuelight"
             android:text="Description"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="18sp"
+            android:textSize="22sp"
             android:visibility="visible" />
 
     </LinearLayout>
