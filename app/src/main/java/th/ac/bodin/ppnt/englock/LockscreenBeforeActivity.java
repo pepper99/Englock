@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import com.vansuita.gaussianblur.GaussianBlur;
 
-public class LockscreenBeforeActivity extends Activity{
+public class LockscreenBeforeActivity extends Activity {
     private TextView cntdownTxt;
     private TextView unlockTXT;
     private ImageView wallpp;
@@ -104,6 +104,8 @@ public class LockscreenBeforeActivity extends Activity{
                 public void onFinish() {
                     cntdownTxt.setText("0");
 
+                    overridePendingTransition(R.anim.mainfadein, R.anim.mainfadeout);
+
                     if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) pBar.setProgress(0, true);
                     else pBar.setProgress(0);
 
@@ -111,19 +113,16 @@ public class LockscreenBeforeActivity extends Activity{
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(i);
 
-                    overridePendingTransition(R.anim.mainfadein, R.anim.mainfadeout);
-
                     finish();
                 }
             }.start();
         }
 
         else {
-            Intent i = new Intent(LockscreenBeforeActivity.this, LockscreenActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(i);
-
             overridePendingTransition(R.layout.mainfadein, R.layout.mainfadeout);
+            Intent i = new Intent(LockscreenBeforeActivity.this, LockscreenActivity.class);
+            //i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
 
             finish();
         }

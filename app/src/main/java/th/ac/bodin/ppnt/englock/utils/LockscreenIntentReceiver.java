@@ -17,7 +17,7 @@ public class LockscreenIntentReceiver extends BroadcastReceiver {
         Boolean isOn = shared.getBoolean("isOn", true);
 
         //If the screen was just turned on or it just booted up, start your Lock Activity
-        if( (action.equals(Intent.ACTION_SCREEN_OFF) || action.equals(Intent.ACTION_BOOT_COMPLETED)) && isOn )
+        if( action.equals(Intent.ACTION_SCREEN_OFF) && isOn )
             {
                 Log.d("kuy","prepare lockscreen");
                 Intent i = new Intent(context, LockscreenBeforeActivity.class);

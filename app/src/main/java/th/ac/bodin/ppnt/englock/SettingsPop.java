@@ -1,6 +1,7 @@
 package th.ac.bodin.ppnt.englock;
 
 import android.app.ActivityManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,8 +30,6 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.Locale;
 
-import th.ac.bodin.ppnt.englock.utils.LockscreenService;
-
 public class SettingsPop extends AppCompatActivity {
 
     SharedPreferences shared;
@@ -40,6 +39,7 @@ public class SettingsPop extends AppCompatActivity {
     AlertDialog alertDialog1;
     String lang;
     GoogleSignInClient mGoogleSignInClient;
+    ProgressDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,6 +139,9 @@ public class SettingsPop extends AppCompatActivity {
     }
 
     private void clearAccount() {
+        loadingDialog = ProgressDialog.show(this, "Signing out", "Loading...", true, false);
+
+// ซ่อน Progress Dialog
         initInstance();
         mGoogleSignInClient.revokeAccess().addOnCompleteListener(this, new OnCompleteListener<Void>() {
             @Override
@@ -151,6 +154,18 @@ public class SettingsPop extends AppCompatActivity {
                 editor = sharedPreferences.edit();
                 editor.clear();
                 editor.apply();
+                sharedPreferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
+                editor = sharedPreferences.edit();
+                editor.putBoolean("gotFreeItem", false);
+                editor.apply();
+
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                loadingDialog.dismiss();
+                startActivity(i);
+
+                finish();
             }
         });
     }

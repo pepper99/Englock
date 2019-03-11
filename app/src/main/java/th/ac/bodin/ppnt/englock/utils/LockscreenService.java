@@ -13,9 +13,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import th.ac.bodin.ppnt.englock.MainActivity;
@@ -25,8 +29,6 @@ public class LockscreenService extends Service {
 
     BroadcastReceiver receiver;
     IntentFilter filter;
-    NotificationManager notificationManager;
-    SharedPreferences shared;
     LockscreenService m_service;
     int NOTIFICATION_ID = 1150;
 
@@ -69,9 +71,7 @@ public class LockscreenService extends Service {
         //Start listening for the Screen On, Screen Off, and Boot completed actions
         filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
         //filter.addAction(Intent.ACTION_SCREEN_ON);
-        filter.addAction(Intent.ACTION_BOOT_COMPLETED);
-
-        //Set up a receiver to listen for the Intents in this Service
+        //filter.addAction(Intent.ACTION_BOOT_COMPLETED);
         receiver = new LockscreenIntentReceiver();
         registerReceiver(receiver, filter);
 
@@ -109,10 +109,18 @@ public class LockscreenService extends Service {
     };
 
     private void startForeground() {
+        String channelId;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            channelId = createNotificationChannel("elChannel", "Englock Background Service");
+        } else {
+            // If earlier version channel ID is not used
+            // https://developer.android.com/reference/android/support/v4/app/NotificationCompat.Builder.html#NotificationCompat.Builder(android.content.Context)
+            channelId = "elChannel";
+        }
         // create the notification
-        Notification.Builder m_notificationBuilder = new Notification.Builder(this)
+        NotificationCompat.Builder m_notificationBuilder = new NotificationCompat.Builder(this, channelId)
                 .setContentTitle(getText(R.string.app_name))
-                .setContentText("test")
+                .setContentText("Englock is running in the background.")
                 .setSmallIcon(R.drawable.englock_icon_pink);
 
         // create the pending intent and add to the notification
@@ -121,5 +129,15 @@ public class LockscreenService extends Service {
         m_notificationBuilder.setContentIntent(pendingIntent);
 
         startForeground(NOTIFICATION_ID, m_notificationBuilder.build());
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private String createNotificationChannel(String channelId, String channelName){
+        NotificationChannel chan = new NotificationChannel(channelId, channelName, NotificationManagerCompat.IMPORTANCE_NONE);
+        chan.setLightColor(Color.BLUE);
+        chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        NotificationManager service = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        service.createNotificationChannel(chan);
+        return channelId;
     }
 }

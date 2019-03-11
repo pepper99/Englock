@@ -2,6 +2,7 @@ package th.ac.bodin.ppnt.englock.fragments;
 
 
 import android.animation.ObjectAnimator;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -54,6 +55,7 @@ public class Home_Fragment extends Fragment {
     public static final int RC_SIGN_IN = 1010;
 
     GoogleSignInClient mGoogleSignInClient;
+    ProgressDialog loadingDialog;
 
     public static Home_Fragment newInstance() {
         return new Home_Fragment();
@@ -156,6 +158,8 @@ public class Home_Fragment extends Fragment {
     }
 
     public void signIn() {
+        loadingDialog = ProgressDialog.show(getActivity(), "Signing in", "Loading...", true, false);
+
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -268,9 +272,11 @@ public class Home_Fragment extends Fragment {
                             alertDialog1.dismiss();
                         }
                     };
+                    builder.setCancelable(false);
                     builder.setPositiveButton(yes, dialogClickListener);
                     builder.setNegativeButton(no, dialogClickListener);
                     alertDialog1 = builder.create();
+                    loadingDialog.dismiss();
                     alertDialog1.show();
                 }
                 else {

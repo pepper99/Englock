@@ -1,21 +1,26 @@
 package th.ac.bodin.ppnt.englock;
 
+import android.Manifest;
 import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
@@ -35,14 +40,15 @@ import th.ac.bodin.ppnt.englock.fragments.More_Fragment;
 import th.ac.bodin.ppnt.englock.fragments.Shop_Fragment;
 import th.ac.bodin.ppnt.englock.utils.LockscreenService;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback{
 
     SharedPreferences.OnSharedPreferenceChangeListener listener;
     SharedPreferences prefs;
     private LockscreenService lockscreenService;
     Intent mServiceIntent;
-    LinearLayout pointsLayout;
+    LinearLayoutCompat pointsLayout;
     TextView pointsText;
+    private final int REQUEST_READ_PHONE_STATE = 1;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -103,6 +109,12 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_PHONE_STATE);
+        }
 
         Bundle bundle = getIntent().getExtras();
 
@@ -309,6 +321,20 @@ public class MainActivity extends AppCompatActivity {
     public void updatePoints(long points) {
         if(pointsText != null) {
             pointsText.setText(String.valueOf(points));
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_READ_PHONE_STATE:
+                if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    //TODO
+                }
+                break;
+
+            default:
+                break;
         }
     }
 }

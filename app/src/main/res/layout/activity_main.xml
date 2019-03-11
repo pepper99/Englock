@@ -21,6 +21,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:backgroundTint="@color/white"
+            app:backgroundTint="@color/white"
             android:gravity="left|center_vertical"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:layout_constraintEnd_toEndOf="parent"
@@ -48,12 +49,13 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_englock_iconlong" />
 
-                <LinearLayout
+                <android.support.v7.widget.LinearLayoutCompat
                     android:id="@+id/pointsLayout"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/roundcorner"
                     android:backgroundTint="#39d51f"
+                    app:backgroundTint="#39d51f"
                     android:gravity="right|center_vertical"
                     android:orientation="horizontal"
                     android:visibility="invisible"
@@ -81,7 +83,7 @@
                         android:text="9001"
                         android:textColor="@color/white" />
 
-                </LinearLayout>
+                </android.support.v7.widget.LinearLayoutCompat>
 
             </android.support.constraint.ConstraintLayout>
 

@@ -2,6 +2,7 @@ package th.ac.bodin.ppnt.englock;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,6 +14,8 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.Voice;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -22,10 +25,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.vansuita.gaussianblur.GaussianBlur;
 
+import java.util.Locale;
 import java.util.Random;
 
 import th.ac.bodin.ppnt.englock.extra_assets.ViewDialog;
@@ -36,7 +38,7 @@ import th.ac.bodin.ppnt.englock.stats.FirebaseHelper;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;*/
 
-public class LockscreenActivity extends Activity {
+public class LockscreenActivity extends Activity implements TextToSpeech.OnInitListener{
 
     public static final String TAG = "OhHaiMARK";
 
@@ -56,6 +58,9 @@ public class LockscreenActivity extends Activity {
     Vibrator v;
     FirebaseHelper firebaseHelper;
 
+    TextToSpeech tts;
+    ProgressDialog loadingDialog;
+
     int remainingTime;
     int missCount;
 
@@ -66,12 +71,25 @@ public class LockscreenActivity extends Activity {
     CountDownTimer cdt;
 
     @Override
+    public void onInit(int status) {
+        // Do something here
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        tts.shutdown();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
 
         setContentView(R.layout.activity_lockscreen);
+
+        loadingDialog = ProgressDialog.show(this, "Prepare your question", "Loading...", true, false);
 
         clickAns[0] = (Button)findViewById(R.id.choiceA);
         clickAns[1] = (Button)findViewById(R.id.choiceB);
@@ -130,7 +148,7 @@ public class LockscreenActivity extends Activity {
         int[] getWords = new int[4];
         for(i = 0; i < 4; i++) getWords[i] = -1;
 
-                String btntxt;
+        String btntxt;
         randomTemp = -1;
         for(i = 0; i < 4; i++) {
             while(randomTemp == getWords[0] || randomTemp == getWords[1]
@@ -170,25 +188,6 @@ public class LockscreenActivity extends Activity {
         mCursor.close();
         db.close();
 
-        //countdown
-        this.firebaseHelper = new FirebaseHelper(this);
-        cdt = new CountDownTimer((CountDownAmnt) * 1000, 1000) {
-            public void onTick(long millisUntilFinished) {
-                if(!crct){
-                    remainingTime = (int) millisUntilFinished / 1000;
-                    pbTimer.setProgress(remainingTime+1);
-                }
-            }
-
-            public void onFinish() {
-                crct = true;
-                for(int i = 0; i < 4; i++) clickAns[i].setEnabled(false);
-                pbTimer.setProgress(0);
-
-                TimeoutAlert();
-            }
-        }.start();
-
         clickAns[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -213,6 +212,34 @@ public class LockscreenActivity extends Activity {
                 clickAns(view, 3, ans);
             }
         });
+
+        tts = new TextToSpeech(this, this, "com.google.android.tts");
+
+        //countdown
+        this.firebaseHelper = new FirebaseHelper(this);
+        cdt = new CountDownTimer((CountDownAmnt) * 1000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                if(!crct){
+                    remainingTime = (int) millisUntilFinished / 1000;
+                    pbTimer.setProgress(remainingTime+1);
+                }
+            }
+
+            public void onFinish() {
+                crct = true;
+                for(int i = 0; i < 4; i++) clickAns[i].setEnabled(false);
+                pbTimer.setProgress(0);
+
+                TimeoutAlert();
+            }
+        };
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadingDialog.dismiss();
+        cdt.start();
     }
 
     /**
@@ -242,6 +269,8 @@ public class LockscreenActivity extends Activity {
     void clickAns(View view, int choices, int ans) {
         if(!crct){
             if(ans == choices) {
+                cdt.cancel();
+
                 long newPts = scoreCal(remainingTime, missCount);
                 crct = true;
 
@@ -267,8 +296,6 @@ public class LockscreenActivity extends Activity {
                     }
                     else clickAns[i].setEnabled(false);
                 }
-
-                cdt.cancel();
                 saveDash(enword,thword,pop);
 
                 String AlertTxt = getResources().getString(R.string.niceone) + "\n" + enword + " : " + thword;
@@ -278,6 +305,7 @@ public class LockscreenActivity extends Activity {
                         .setLayout(R.layout.dialog_box)
                         .build();
                 alert.setActivity(this);
+                alert.setWord(enword);
                 alert.show(this.getFragmentManager(), "LUL");
             }
             else {
@@ -335,6 +363,16 @@ public class LockscreenActivity extends Activity {
                 .setLayout(R.layout.dialog_box_timeout)
                 .build();
         alert.setActivity(this);
+        alert.setWord(enword);
         alert.show(this.getFragmentManager(), "LUL");
+    }
+
+    public void tts(String enword) {
+        tts.setLanguage(Locale.US);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            tts.speak(enword, TextToSpeech.QUEUE_FLUSH, null, "englock");
+        } else {
+            tts.speak(enword, TextToSpeech.QUEUE_FLUSH, null);
+        }
     }
 }

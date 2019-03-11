@@ -42,4 +42,19 @@
         android:layout_centerHorizontal="true"
         android:textColor="#ffffffff" />
 
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/ttsBtn"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignBottom="@+id/a"
+        android:layout_alignEnd="@id/a"
+        android:layout_alignRight="@id/a"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        android:background="@drawable/shadow_circular"
+        android:backgroundTint="#4EB7CE"
+        app:backgroundTint="#4EB7CE"
+        app:srcCompat="@drawable/ic_volume_up_white_24dp" />
+
 </RelativeLayout>

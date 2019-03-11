@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name="th.ac.bodin.ppnt.englock.englock"
@@ -36,13 +38,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".WelcomeActivity"/>
+        <activity android:name=".WelcomeActivity"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".FreeShopMenu"/>
+        <activity android:name=".FreeShopMenu"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".SettingsPop"
-            android:theme="@style/ThemeGreen">
+            android:theme="@style/ThemeGreen"
+            android:screenOrientation="portrait">
         </activity>
 
         <activity
@@ -75,9 +80,6 @@
         <receiver
             android:name=".utils.LockscreenIntentReceiver"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
         </receiver>
     </application>
 

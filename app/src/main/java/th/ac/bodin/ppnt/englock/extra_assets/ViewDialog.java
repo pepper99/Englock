@@ -16,8 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import th.ac.bodin.ppnt.englock.LockscreenActivity;
 import th.ac.bodin.ppnt.englock.R;
 
 public class ViewDialog extends DialogFragment {
@@ -28,6 +30,7 @@ public class ViewDialog extends DialogFragment {
 
     private TextView tvMessage;
     private Button dialogButton;
+    private ImageButton ttsBtn;
 
     private OnDialogListener onDialogListener;
 
@@ -35,6 +38,7 @@ public class ViewDialog extends DialogFragment {
     private int button;
     private int layout;
 
+    String enword;
     public Activity c;
 
     public interface OnDialogListener {
@@ -102,6 +106,8 @@ public class ViewDialog extends DialogFragment {
         }
     }
 
+    public void setWord(String enword) { this.enword = enword; }
+
     public void setActivity(Activity c){
         this.c = c;
     }
@@ -121,6 +127,19 @@ public class ViewDialog extends DialogFragment {
                     c.finish();
                 }
                 dismiss();
+            }
+        });
+
+        ttsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnDialogListener listener = getOnDialogListener();
+                if (listener != null) {
+                    listener.onButtonClick();
+                }
+                if(c instanceof LockscreenActivity) {
+                    ((LockscreenActivity) c).tts(enword);
+                }
             }
         });
     }
@@ -152,6 +171,7 @@ public class ViewDialog extends DialogFragment {
     private void bindView(View view) {
         tvMessage = (TextView) view.findViewById(R.id.text_dialog);
         dialogButton = (Button) view.findViewById(R.id.btn_dialog);
+        ttsBtn = (ImageButton) view.findViewById(R.id.ttsBtn);
     }
 
     @Override
