@@ -35,7 +35,7 @@ public class SettingsPop extends AppCompatActivity {
     SharedPreferences shared;
     SharedPreferences.Editor editor;
     SwitchCompat lockscreenToggle;
-    Button timerbutton, revokebutton, changelangbutton, haxbtn;
+    Button timerbutton, revokebutton, changelangbutton;
     AlertDialog alertDialog1;
     String lang;
     GoogleSignInClient mGoogleSignInClient;
@@ -68,7 +68,6 @@ public class SettingsPop extends AppCompatActivity {
         timerbutton = (Button) findViewById(R.id.quiztimersetter);
         revokebutton = (Button) findViewById(R.id.revokeacnt);
         changelangbutton = (Button) findViewById(R.id.changeLang);
-        haxbtn = (Button) findViewById(R.id.hax);
 
         timerbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,12 +85,6 @@ public class SettingsPop extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 changeLang();
-            }
-        });
-        haxbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Hax();
             }
         });
     }
@@ -262,15 +255,6 @@ public class SettingsPop extends AppCompatActivity {
         });
         alertDialog1 = builder.create();
         alertDialog1.show();
-    }
-
-    private void Hax() {
-        SharedPreferences shared = getSharedPreferences("userStats", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = shared.edit();
-        long h = shared.getLong("points", 0) + 100;
-        editor.putLong("points", h );
-        Toast.makeText(this, "+100 = " + String.valueOf(h), Toast.LENGTH_SHORT).show();
-        editor.commit();
     }
 
     private void initInstance() {

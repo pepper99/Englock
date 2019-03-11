@@ -129,28 +129,4 @@
 
     </FrameLayout>
 
-    <FrameLayout
-        android:id="@+id/frameLayout7"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout6">
-
-        <Button
-            android:id="@+id/hax"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/thaisansneueregular"
-            android:gravity="left|center_vertical"
-            android:paddingLeft="19dp"
-            android:paddingStart="19dp"
-            android:textAllCaps="false"
-            android:textSize="28sp" />
-
-    </FrameLayout>
-
 </android.support.constraint.ConstraintLayout>
